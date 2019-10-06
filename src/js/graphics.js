@@ -11,6 +11,7 @@ import Flip from './component/flip';
 import Rotation from './component/rotation';
 import FreeDrawing from './component/freeDrawing';
 import Line from './component/line';
+import Polygon from './component/polygon';
 import Text from './component/text';
 import Icon from './component/icon';
 import Filter from './component/filter';
@@ -18,6 +19,7 @@ import Shape from './component/shape';
 import CropperDrawingMode from './drawingMode/cropper';
 import FreeDrawingMode from './drawingMode/freeDrawing';
 import LineDrawingMode from './drawingMode/lineDrawing';
+import PolygonDrawingMode from './drawingMode/polygonDrawing';
 import ShapeDrawingMode from './drawingMode/shape';
 import TextDrawingMode from './drawingMode/text';
 import consts from './consts';
@@ -358,6 +360,7 @@ class Graphics {
      * @returns {boolean} true if success or false
      */
     startDrawingMode(mode, option) {
+        console.log(mode);
         if (this._isSameDrawingMode(mode)) {
             return true;
         }
@@ -812,6 +815,7 @@ class Graphics {
         this._register(this._drawingModeMap, new CropperDrawingMode());
         this._register(this._drawingModeMap, new FreeDrawingMode());
         this._register(this._drawingModeMap, new LineDrawingMode());
+        this._register(this._drawingModeMap, new PolygonDrawingMode());
         this._register(this._drawingModeMap, new ShapeDrawingMode());
         this._register(this._drawingModeMap, new TextDrawingMode());
     }
@@ -827,6 +831,7 @@ class Graphics {
         this._register(this._componentMap, new Rotation(this));
         this._register(this._componentMap, new FreeDrawing(this));
         this._register(this._componentMap, new Line(this));
+        this._register(this._componentMap, new Polygon(this));
         this._register(this._componentMap, new Text(this));
         this._register(this._componentMap, new Icon(this));
         this._register(this._componentMap, new Filter(this));

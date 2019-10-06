@@ -29,6 +29,17 @@ export default ({locale, iconStyle: {normal, active}}) => (`
                     ${locale.localize('Straight')}
                 </label>
             </div>
+            <div class="tui-image-editor-button polygon">
+                <div>
+                    <svg class="svg_ic-submenu">
+                        <use xlink:href="${normal.path}#${normal.name}-ic-draw-polygon" class="normal"/>
+                        <use xlink:href="${active.path}#${active.name}-ic-draw-polygon" class="active"/>
+                    </svg>
+                </div>
+                <label>
+                    ${locale.localize('Polygon')}
+                </label>
+            </div>
         </li>
         <li class="tui-image-editor-partition">
             <div></div>

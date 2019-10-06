@@ -223,9 +223,12 @@ export default {
                 this.stopDrawingMode();
                 if (type === 'free') {
                     this.startDrawingMode('FREE_DRAWING', settings);
-                } else {
+                } else if (type === 'line') {
                     this.startDrawingMode('LINE_DRAWING', settings);
+                } else {
+                    this.startDrawingMode('POLYGON_DRAWING', settings);
                 }
+                console.log('jaaaa');
             },
             setColor: color => {
                 this.setBrush({
@@ -333,6 +336,7 @@ export default {
                 this.stopDrawingMode();
                 this.ui.changeMenu('crop');
             },
+            // eslint-disable-next-line complexity
             preset: presetType => {
                 switch (presetType) {
                     case 'preset-square':
