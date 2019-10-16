@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.4
+ * @version 3.7.6
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -758,7 +758,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            iconCreateResize: this._onIconCreateResize.bind(this),
 	            iconCreateEnd: this._onIconCreateEnd.bind(this),
 	            selectionCleared: this._selectionCleared.bind(this),
-	            selectionCreated: this._selectionCreated.bind(this)
+	            selectionCreated: this._selectionCreated.bind(this),
+	            imageChanged: this._imageChanged.bind(this)
 	        };
 
 	        this._attachInvokerEvents();
@@ -921,7 +922,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                'iconCreateEnd': this._handlers.iconCreateEnd,
 	                'selectionCleared': this._handlers.selectionCleared,
 	                'selectionCreated': this._handlers.selectionCreated,
-	                'addObjectAfter': this._handlers.addObjectAfter
+	                'addObjectAfter': this._handlers.addObjectAfter,
+	                'imageChanged': this._handlers.imageChanged
 	            });
 	        }
 
@@ -1987,6 +1989,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_selectionCreated',
 	        value: function _selectionCreated(eventTarget) {
 	            this.fire(events.SELECTION_CREATED, eventTarget);
+	        }
+	    }, {
+	        key: '_imageChanged',
+	        value: function _imageChanged(eventTarget) {
+	            this.fire(events.IMAGE_CHANGED, eventTarget);
 	        }
 
 	        /**
@@ -4830,7 +4837,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        UNDO_STACK_CHANGED: 'undoStackChanged',
 	        SELECTION_CLEARED: 'selectionCleared',
 	        SELECTION_CREATED: 'selectionCreated',
-	        CANVAS_MODIFIED: 'canvasModified'
+	        CANVAS_MODIFIED: 'canvasModified',
+	        IMAGE_CHANGED: 'imageChanged'
 	    },
 
 	    /**
@@ -11411,6 +11419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            this.imageName = name;
 	            this.canvasImage = canvasImage;
+	            this.fire(events.IMAGE_CHANGED, this.canvasImage);
 	        }
 
 	        /**
