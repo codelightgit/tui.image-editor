@@ -429,6 +429,7 @@ class Graphics {
         }
         this.imageName = name;
         this.canvasImage = canvasImage;
+        this.fire(events.IMAGE_CHANGED, this.canvasImage);
     }
 
     /**

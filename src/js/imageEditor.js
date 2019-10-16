@@ -135,7 +135,8 @@ class ImageEditor {
             iconCreateResize: this._onIconCreateResize.bind(this),
             iconCreateEnd: this._onIconCreateEnd.bind(this),
             selectionCleared: this._selectionCleared.bind(this),
-            selectionCreated: this._selectionCreated.bind(this)
+            selectionCreated: this._selectionCreated.bind(this),
+            imageChanged: this._imageChanged.bind(this)
         };
 
         this._attachInvokerEvents();
@@ -286,7 +287,8 @@ class ImageEditor {
             'iconCreateEnd': this._handlers.iconCreateEnd,
             'selectionCleared': this._handlers.selectionCleared,
             'selectionCreated': this._handlers.selectionCreated,
-            'addObjectAfter': this._handlers.addObjectAfter
+            'addObjectAfter': this._handlers.addObjectAfter,
+            'imageChanged': this._handlers.imageChanged
         });
     }
 
@@ -1183,6 +1185,10 @@ class ImageEditor {
      */
     _selectionCreated(eventTarget) {
         this.fire(events.SELECTION_CREATED, eventTarget);
+    }
+
+    _imageChanged(eventTarget) {
+        this.fire(events.IMAGE_CHANGED, eventTarget);
     }
 
     /**

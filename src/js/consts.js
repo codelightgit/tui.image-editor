@@ -73,7 +73,8 @@ module.exports = {
         UNDO_STACK_CHANGED: 'undoStackChanged',
         SELECTION_CLEARED: 'selectionCleared',
         SELECTION_CREATED: 'selectionCreated',
-        CANVAS_MODIFIED: 'canvasModified'
+        CANVAS_MODIFIED: 'canvasModified',
+        IMAGE_CHANGED: 'imageChanged'
     },
 
     /**

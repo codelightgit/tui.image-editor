@@ -48,6 +48,10 @@
              exp()
          })
 
+         imageEditor.on('imageChanged', (e) => {
+             console.log('ssss')
+         })
+
          window.onresize = function() {
              imageEditor.ui.resizeEditor();
          }
