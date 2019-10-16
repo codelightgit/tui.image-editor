@@ -455,6 +455,7 @@ class ImageEditor {
          * });
          */
         this.fire(events.OBJECT_MOVED, props);
+        this._onCanvasModified();
     }
 
     /**
@@ -474,6 +475,7 @@ class ImageEditor {
          * });
          */
         this.fire(events.OBJECT_SCALED, props);
+        this._onCanvasModified();
     }
 
     /**
@@ -688,6 +690,8 @@ class ImageEditor {
             return Promise.reject(rejectMessages.invalidParameters);
         }
 
+        this._onCanvasModified();
+
         return this.loadImageFromURL(data.url, data.imageName);
     }
 
@@ -715,6 +719,8 @@ class ImageEditor {
      * @private
      */
     _flip(type) {
+        this._onCanvasModified();
+
         return this.execute(commands.FLIP_IMAGE, type);
     }
 
@@ -1061,7 +1067,12 @@ class ImageEditor {
      * @private
      */
     _onTextChanged(objectProps) {
-        this.changeText(objectProps.id, objectProps.text);
+        // this.changeText(objectProps.id, objectProps.text);
+        this.fire(events.TEXT_CHANGED, {
+            id: objectProps.id,
+            text: objectProps.text
+        });
+        this._onCanvasModified();
     }
 
     /**
@@ -1073,6 +1084,7 @@ class ImageEditor {
      */
     _onIconCreateResize(originPointer) {
         this.fire(events.ICON_CREATE_RESIZE, originPointer);
+        this._onCanvasModified();
     }
 
     /**
@@ -1084,6 +1096,7 @@ class ImageEditor {
      */
     _onIconCreateEnd(originPointer) {
         this.fire(events.ICON_CREATE_END, originPointer);
+        this._onCanvasModified();
     }
 
     /**
@@ -1136,8 +1149,10 @@ class ImageEditor {
      * @private
      */
     _onAddObject(objectProps) {
+        console.log(objectProps.id);
         const obj = this._graphics.getObject(objectProps.id);
         this._pushAddObjectCommand(obj);
+        this._onCanvasModified();
     }
 
     /**
@@ -1147,6 +1162,10 @@ class ImageEditor {
      */
     _onAddObjectAfter(objectProps) {
         this.fire(events.ADD_OBJECT_AFTER, objectProps);
+    }
+
+    _onCanvasModified() {
+        this.fire(events.CANVAS_MODIFIED);
     }
 
     /**
@@ -1225,6 +1244,20 @@ class ImageEditor {
      */
     changeIconColor(id, color) {
         return this.execute(commands.CHANGE_ICON_COLOR, id, color);
+    }
+
+    toObject() {
+        return this._graphics.toObject();
+    }
+
+    toJson() {
+        const canvasObject = this._graphics.toObject();
+
+        return JSON.stringify(canvasObject);
+    }
+
+    loadFromJSON(jsonStr) {
+        return this._graphics.loadFromJSON(jsonStr);
     }
 
     /**

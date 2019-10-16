@@ -16,6 +16,9 @@
     <body>
 
         <div id="tui-image-editor-container"></div>
+        <button onclick="exp()">asdasdas</button>
+        <button onclick="restore()">restore</button>
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.3.2/fabric.js"></script>
         <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
         <script type="text/javascript" src="https://uicdn.toast.com/tui-color-picker/v2.2.3/tui-color-picker.js"></script>
@@ -33,7 +36,7 @@
                      name: 'SampleImage'
                  },
                  theme: blackTheme, // or whiteTheme
-                 initMenu: 'filter',
+                 initMenu: 'draw',
                  menuBarPosition: 'bottom'
              },
              cssMaxWidth: 700,
@@ -41,8 +44,22 @@
              usageStatistics: false
          });
 
+         imageEditor.on('canvasModified', (e) => {
+             exp()
+         })
+
          window.onresize = function() {
              imageEditor.ui.resizeEditor();
+         }
+
+         function exp() {
+             const json = imageEditor.toJson()
+             console.log(json)
+         }
+
+         function restore() {
+             const json = prompt('json')
+             imageEditor.loadFromJSON(json)
          }
         </script>
     </body>

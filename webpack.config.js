@@ -80,6 +80,7 @@ module.exports = {
         progress: true,
         inline: true,
         host: '0.0.0.0',
+        port: 8081,
         disableHostCheck: true
     }
 };

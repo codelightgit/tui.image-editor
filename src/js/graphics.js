@@ -150,7 +150,8 @@ class Graphics {
             onObjectSelected: this._onObjectSelected.bind(this),
             onPathCreated: this._onPathCreated.bind(this),
             onSelectionCleared: this._onSelectionCleared.bind(this),
-            onSelectionCreated: this._onSelectionCreated.bind(this)
+            onSelectionCreated: this._onSelectionCreated.bind(this),
+            onTextChanged: this._onTextChanged.bind(this)
         };
 
         this._setObjectCachingToFalse();
@@ -221,6 +222,14 @@ class Graphics {
      */
     getObjects() {
         return this._canvas.getObjects().slice();
+    }
+
+    toObject() {
+        return this._canvas.toObject();
+    }
+
+    loadFromJSON(jsonString) {
+        this._canvas.loadFromJSON(jsonString);
     }
 
     /**
@@ -920,7 +929,8 @@ class Graphics {
             'path:created': handler.onPathCreated,
             'selection:cleared': handler.onSelectionCleared,
             'selection:created': handler.onSelectionCreated,
-            'selection:updated': handler.onObjectSelected
+            'selection:updated': handler.onObjectSelected,
+            'text:changed': handler.onTextChanged
         });
     }
 
@@ -1023,6 +1033,10 @@ class Graphics {
      */
     _onSelectionCreated(fEvent) {
         this.fire(events.SELECTION_CREATED, fEvent.target);
+    }
+
+    _onTextChanged(fEvent) {
+        this.fire(events.TEXT_CHANGED, fEvent.target);
     }
 
     /**

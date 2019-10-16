@@ -236,7 +236,7 @@ class Ui {
             },
             locale: {},
             menuIconPath: '',
-            menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask', 'filter'],
+            menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask'],
             initMenu: '',
             uiSize: {
                 width: '100%',

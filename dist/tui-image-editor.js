@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.3
+ * @version 3.7.4
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1120,6 +1120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	             * });
 	             */
 	            this.fire(events.OBJECT_MOVED, props);
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1142,6 +1143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	             * });
 	             */
 	            this.fire(events.OBJECT_SCALED, props);
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1413,6 +1415,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _promise2.default.reject(rejectMessages.invalidParameters);
 	            }
 
+	            this._onCanvasModified();
+
 	            return this.loadImageFromURL(data.url, data.imageName);
 	        }
 
@@ -1449,6 +1453,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_flip',
 	        value: function _flip(type) {
+	            this._onCanvasModified();
+
 	            return this.execute(commands.FLIP_IMAGE, type);
 	        }
 
@@ -1840,7 +1846,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_onTextChanged',
 	        value: function _onTextChanged(objectProps) {
-	            this.changeText(objectProps.id, objectProps.text);
+	            // this.changeText(objectProps.id, objectProps.text);
+	            this.fire(events.TEXT_CHANGED, {
+	                id: objectProps.id,
+	                text: objectProps.text
+	            });
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1855,6 +1866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_onIconCreateResize',
 	        value: function _onIconCreateResize(originPointer) {
 	            this.fire(events.ICON_CREATE_RESIZE, originPointer);
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1869,6 +1881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_onIconCreateEnd',
 	        value: function _onIconCreateEnd(originPointer) {
 	            this.fire(events.ICON_CREATE_END, originPointer);
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1930,8 +1943,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_onAddObject',
 	        value: function _onAddObject(objectProps) {
+	            console.log(objectProps.id);
 	            var obj = this._graphics.getObject(objectProps.id);
 	            this._pushAddObjectCommand(obj);
+	            this._onCanvasModified();
 	        }
 
 	        /**
@@ -1944,6 +1959,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_onAddObjectAfter',
 	        value: function _onAddObjectAfter(objectProps) {
 	            this.fire(events.ADD_OBJECT_AFTER, objectProps);
+	        }
+	    }, {
+	        key: '_onCanvasModified',
+	        value: function _onCanvasModified() {
+	            this.fire(events.CANVAS_MODIFIED);
 	        }
 
 	        /**
@@ -2040,6 +2060,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'changeIconColor',
 	        value: function changeIconColor(id, color) {
 	            return this.execute(commands.CHANGE_ICON_COLOR, id, color);
+	        }
+	    }, {
+	        key: 'toObject',
+	        value: function toObject() {
+	            return this._graphics.toObject();
+	        }
+	    }, {
+	        key: 'toJson',
+	        value: function toJson() {
+	            var canvasObject = this._graphics.toObject();
+
+	            return JSON.stringify(canvasObject);
+	        }
+	    }, {
+	        key: 'loadFromJSON',
+	        value: function loadFromJSON(jsonStr) {
+	            return this._graphics.loadFromJSON(jsonStr);
 	        }
 
 	        /**
@@ -4792,7 +4829,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        REDO_STACK_CHANGED: 'redoStackChanged',
 	        UNDO_STACK_CHANGED: 'undoStackChanged',
 	        SELECTION_CLEARED: 'selectionCleared',
-	        SELECTION_CREATED: 'selectionCreated'
+	        SELECTION_CREATED: 'selectionCreated',
+	        CANVAS_MODIFIED: 'canvasModified'
 	    },
 
 	    /**
@@ -5263,7 +5301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	                locale: {},
 	                menuIconPath: '',
-	                menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask', 'filter'],
+	                menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask'],
 	                initMenu: '',
 	                uiSize: {
 	                    width: '100%',
@@ -11025,7 +11063,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onObjectSelected: this._onObjectSelected.bind(this),
 	            onPathCreated: this._onPathCreated.bind(this),
 	            onSelectionCleared: this._onSelectionCleared.bind(this),
-	            onSelectionCreated: this._onSelectionCreated.bind(this)
+	            onSelectionCreated: this._onSelectionCreated.bind(this),
+	            onTextChanged: this._onTextChanged.bind(this)
 	        };
 
 	        this._setObjectCachingToFalse();
@@ -11118,6 +11157,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'getObjects',
 	        value: function getObjects() {
 	            return this._canvas.getObjects().slice();
+	        }
+	    }, {
+	        key: 'toObject',
+	        value: function toObject() {
+	            return this._canvas.toObject();
+	        }
+	    }, {
+	        key: 'loadFromJSON',
+	        value: function loadFromJSON(jsonString) {
+	            this._canvas.loadFromJSON(jsonString);
 	        }
 
 	        /**
@@ -11977,7 +12026,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                'path:created': handler.onPathCreated,
 	                'selection:cleared': handler.onSelectionCleared,
 	                'selection:created': handler.onSelectionCreated,
-	                'selection:updated': handler.onObjectSelected
+	                'selection:updated': handler.onObjectSelected,
+	                'text:changed': handler.onTextChanged
 	            });
 	        }
 
@@ -12110,6 +12160,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_onSelectionCreated',
 	        value: function _onSelectionCreated(fEvent) {
 	            this.fire(events.SELECTION_CREATED, fEvent.target);
+	        }
+	    }, {
+	        key: '_onTextChanged',
+	        value: function _onTextChanged(fEvent) {
+	            this.fire(events.TEXT_CHANGED, fEvent.target);
 	        }
 
 	        /**
