@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.2
+ * @version 3.7.3
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -5717,7 +5717,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.default = function (_ref) {
 	    var locale = _ref.locale,
-	        biImage = _ref.biImage,
 	        commonStyle = _ref.commonStyle,
 	        headerStyle = _ref.headerStyle,
 	        loadButtonStyle = _ref.loadButtonStyle,
