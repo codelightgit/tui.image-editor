@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.0
+ * @version 3.7.2
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -5723,7 +5723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        loadButtonStyle = _ref.loadButtonStyle,
 	        downloadButtonStyle = _ref.downloadButtonStyle,
 	        submenuStyle = _ref.submenuStyle;
-	    return '\n    <div class="tui-image-editor-main-container" style="' + commonStyle + '">\n        <div class="tui-image-editor-header" style="' + headerStyle + '">\n            <div class="tui-image-editor-header-logo">\n                <img src="' + biImage + '" />\n            </div>\n            <div class="tui-image-editor-header-buttons">\n                <div style="' + loadButtonStyle + '">\n                    ' + locale.localize('Load') + '\n                    <input type="file" class="tui-image-editor-load-btn" />\n                </div>\n                <button class="tui-image-editor-download-btn" style="' + downloadButtonStyle + '">\n                    ' + locale.localize('Download') + '\n                </button>\n            </div>\n        </div>\n        <div class="tui-image-editor-main">\n            <div class="tui-image-editor-submenu">\n                <div class="tui-image-editor-submenu-style" style="' + submenuStyle + '"></div>\n            </div>\n            <div class="tui-image-editor-wrap">\n                <div class="tui-image-editor-size-wrap">\n                    <div class="tui-image-editor-align-wrap">\n                        <div class="tui-image-editor"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n';
+	    return '\n    <div class="tui-image-editor-main-container" style="' + commonStyle + '">\n        <div class="tui-image-editor-header" style="' + headerStyle + '">\n            <div class="tui-image-editor-header-buttons">\n                <div style="' + loadButtonStyle + '">\n                    ' + locale.localize('Load') + '\n                    <input type="file" class="tui-image-editor-load-btn" />\n                </div>\n                <button class="tui-image-editor-download-btn" style="' + downloadButtonStyle + '">\n                    ' + locale.localize('Download') + '\n                </button>\n            </div>\n        </div>\n        <div class="tui-image-editor-main">\n            <div class="tui-image-editor-submenu">\n                <div class="tui-image-editor-submenu-style" style="' + submenuStyle + '"></div>\n            </div>\n            <div class="tui-image-editor-wrap">\n                <div class="tui-image-editor-size-wrap">\n                    <div class="tui-image-editor-align-wrap">\n                        <div class="tui-image-editor"></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n';
 	};
 
 /***/ }),
