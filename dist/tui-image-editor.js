@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.6
+ * @version 3.7.7
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2083,6 +2083,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'loadFromJSON',
 	        value: function loadFromJSON(jsonStr) {
+	            var _this2 = this;
+
+	            var restoreObj = JSON.parse(jsonStr);
+	            var imageUrl = restoreObj.backgroundImage.src;
+	            if (imageUrl) {
+	                this.loadImageFromURL(imageUrl, 'bg').then(function (result) {
+	                    _this2.ui.resizeEditor({
+	                        imageSize: {
+	                            oldWidth: result.oldWidth,
+	                            oldHeight: result.oldHeight,
+	                            newWidth: result.newWidth,
+	                            newHeight: result.newHeight
+	                        }
+	                    });
+	                    _this2.ui.activeMenuEvent();
+	                });
+	            }
+
 	            return this._graphics.loadFromJSON(jsonStr);
 	        }
 
@@ -2263,7 +2281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'destroy',
 	        value: function destroy() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            this.stopDrawingMode();
 	            this._detachDomEvents();
@@ -2271,7 +2289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._graphics = null;
 
 	            forEach(this, function (value, key) {
-	                _this2[key] = null;
+	                _this3[key] = null;
 	            }, this);
 	        }
 
@@ -5518,6 +5536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_addSubMenuEvent',
 	        value: function _addSubMenuEvent(menuName) {
+	            console.log(menuName);
 	            this[menuName].addEvent(this._actions[menuName]);
 	        }
 
@@ -5546,7 +5565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._initMenuEvent) {
 	                return;
 	            }
-
+	            console.log('aaaactive');
 	            this._addHelpActionEvent('undo');
 	            this._addHelpActionEvent('redo');
 	            this._addHelpActionEvent('reset');
