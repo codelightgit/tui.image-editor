@@ -404,6 +404,7 @@ class Ui {
      * @private
      */
     _addSubMenuEvent(menuName) {
+        console.log(menuName);
         this[menuName].addEvent(this._actions[menuName]);
     }
 
@@ -424,7 +425,7 @@ class Ui {
         if (this._initMenuEvent) {
             return;
         }
-
+        console.log('aaaactive');
         this._addHelpActionEvent('undo');
         this._addHelpActionEvent('redo');
         this._addHelpActionEvent('reset');

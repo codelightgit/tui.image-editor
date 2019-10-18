@@ -1263,6 +1263,23 @@ class ImageEditor {
     }
 
     loadFromJSON(jsonStr) {
+        const restoreObj = JSON.parse(jsonStr);
+        const imageUrl = restoreObj.backgroundImage.src;
+        if (imageUrl) {
+            this.loadImageFromURL(imageUrl, 'bg')
+                .then(result => {
+                    this.ui.resizeEditor({
+                        imageSize: {
+                            oldWidth: result.oldWidth,
+                            oldHeight: result.oldHeight,
+                            newWidth: result.newWidth,
+                            newHeight: result.newHeight
+                        }
+                    });
+                    this.ui.activeMenuEvent();
+                });
+        }
+
         return this._graphics.loadFromJSON(jsonStr);
     }
 
