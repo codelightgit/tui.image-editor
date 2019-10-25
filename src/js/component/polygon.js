@@ -5,8 +5,13 @@
 import fabric from 'fabric';
 import Component from '../interface/component';
 import consts from '../consts';
-
 const {eventNames} = consts;
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 /**
  * Line
@@ -18,7 +23,6 @@ const {eventNames} = consts;
 class Polygon extends Component {
     constructor(graphics) {
         super(consts.componentNames.POLYGON, graphics);
-
         /**
          * Brush width
          * @type {number}
@@ -30,6 +34,18 @@ class Polygon extends Component {
         this.lineArray = [];
         this.activeLine = null;
         this.activeShape = null;
+        this.x = 0;
+        this.y = 0;
+        this.roof = null;
+        this.roofPoints = [];
+        this.lines = [];
+        this.lineCounter = 0;
+        this.drawingObject = {
+            type: '',
+            background: '',
+            border: ''
+        };
+
         /**
          * fabric.Color instance for brush color
          * @type {fabric.Color}
@@ -45,7 +61,8 @@ class Polygon extends Component {
         this._listeners = {
             mousedown: this._onFabricMouseDown.bind(this),
             mousemove: this._onFabricMouseMove.bind(this),
-            mouseup: this._onFabricMouseUp.bind(this)
+            mouseup: this._onFabricMouseUp.bind(this),
+            doubleClick: this._onFabricDoubleClick.bind(this)
         };
     }
 
@@ -55,7 +72,7 @@ class Polygon extends Component {
      */
     start(setting) {
         const canvas = this.getCanvas();
-
+        this.drawingObject.type = 'roof';
         canvas.defaultCursor = 'crosshair';
         canvas.selection = false;
 
@@ -68,8 +85,11 @@ class Polygon extends Component {
         });
 
         canvas.on({
-            'mouse:down': this._listeners.mousedown
+            'mouse:down': this._listeners.mousedown,
+            'mouse:move': this._listeners.mousemove
         });
+
+        fabric.util.addListener(window, 'dblclick', this._listeners.doubleClick);
     }
 
     /**
@@ -77,8 +97,6 @@ class Polygon extends Component {
      * @param {{width: ?number, color: ?string}} [setting] - Brush width & color
      */
     setBrush(setting) {
-        console.log(setting);
-
         const brush = this.getCanvas().freeDrawingBrush;
 
         setting = setting || {};
@@ -107,57 +125,62 @@ class Polygon extends Component {
         });
 
         canvas.off('mouse:down', this._listeners.mousedown);
+        canvas.off('mouse:move', this._listeners.mousemove);
     }
 
     /**
      * Mousedown event handler in fabric canvas
-     * @param {{target: fabric.Object, e: MouseEvent}} fEvent - Fabric event object
+     * @param {{target: fabric.Object, e: MouseEvent}} options - Fabric event object
      * @private
      */
-    _onFabricMouseDown(fEvent) {
-        const {target} = fEvent;
-        // const canvas = this.getCanvas();
-        // const pointer = canvas.getPointer(fEvent.e);
-        // const points = [pointer.x, pointer.y, pointer.x, pointer.y];
+    _onFabricMouseDown(options) {
+        const canvas = this.getCanvas();
 
-        // this._line = new fabric.Line(points, {
-        //     stroke: this._oColor.toRgba(),
-        //     strokeWidth: this._width,
-        //     evented: false
-        // });
-
-        // this._line.set(consts.fObjectOptions.SELECTION_STYLE);
-
-        // canvas.add(this._line);
-
-        // canvas.on({
-        //     'mouse:move': this._listeners.mousemove,
-        //     'mouse:up': this._listeners.mouseup
-        // });
-        if (target && this.pointArray.length && target.id === this.pointArray[0].id) {
-            this._generate(this.pointArray);
-        } else {
-            this._addPoint(fEvent);
+        if (this.drawingObject.type === 'roof') {
+            canvas.selection = false;
+            this._setStartingPoint(options); // set x,y
+            this.roofPoints.push(new Point(this.x, this.y));
+            const points = [this.x, this.y, this.x, this.y];
+            this.lines.push(new fabric.Line(points, {
+                strokeWidth: 3,
+                selectable: false,
+                stroke: 'red'
+            }));
+            // .setOriginX(this.x)
+            // .setOriginY(this.y));
+            canvas.add(this.lines[this.lineCounter]);
+            this.lineCounter = this.lineCounter + 1;
+            // canvas.on('mouse:up', opts => {
+            //     opts.selection = true;
+            // });
         }
     }
 
     /**
      * Mousemove event handler in fabric canvas
-     * @param {{target: fabric.Object, e: MouseEvent}} fEvent - Fabric event object
+     * @param {{target: fabric.Object, e: MouseEvent}} options - Fabric event object
      * @private
      */
-    _onFabricMouseMove(fEvent) {
+    _onFabricMouseMove(options) {
         const canvas = this.getCanvas();
-        const pointer = canvas.getPointer(fEvent.e);
+        // const pointer = canvas.getPointer(fEvent.e);
 
-        this._line.set({
-            x2: pointer.x,
-            y2: pointer.y
-        });
+        // this._line.set({
+        //     x2: pointer.x,
+        //     y2: pointer.y
+        // });
 
-        this._line.setCoords();
+        // this._line.setCoords();
 
-        canvas.renderAll();
+        // canvas.renderAll();
+        if (this.lines.length > 0 && this.lines[0] !== null && this.lines[0] !== 'undefined' && this.drawingObject.type === 'roof') {
+            this._setStartingPoint(options);
+            this.lines[this.lineCounter - 1].set({
+                x2: this.x,
+                y2: this.y
+            });
+            canvas.renderAll();
+        }
     }
 
     /**
@@ -179,31 +202,102 @@ class Polygon extends Component {
         });
     }
 
+    _onFabricDoubleClick() {
+        const canvas = this.getCanvas();
+        this.drawingObject.type = '';
+        this.lines.forEach(value => {
+            canvas.remove(value);
+        });
+        // canvas.remove(lines[lineCounter - 1]);
+        this.roof = this._makeRoof(this.roofPoints);
+        // this.roof.set(consts.fObjectOptions.SELECTION_STYLE);
+
+        canvas.add(this.roof);
+        canvas.renderAll();
+        // clear arrays
+        this.roofPoints = [];
+        this.lines = [];
+        this.lineCounter = 0;
+        this.graphics.stopDrawingMode();
+    }
+
+    _setStartingPoint(options) {
+        const {x, y} = options.absolutePointer;
+        // const canvas = this.getCanvas();
+        // const offset = canvas.offset();
+
+        this.x = x;
+        this.y = y;
+    }
+
+    _makeRoof(roofPoints) {
+        const left = this._findLeftPaddingForRoof(roofPoints);
+        const top = this._findTopPaddingForRoof(roofPoints);
+        roofPoints.push(new Point(roofPoints[0].x, roofPoints[0].y));
+        const roof = new fabric.Polygon(roofPoints, {
+            stroke: '#58c',
+            strokeWidth: 1,
+            fill: this._oColor.toRgba(),
+            opacity: 1,
+            hasControls: true
+        });
+        roof.set({
+            left,
+            top
+        });
+
+        return roof;
+    }
+
+    _findTopPaddingForRoof(roofPoints) {
+        let result = 999999;
+        let f;
+        for (f = 0; f < this.lineCounter; f = f + 1) {
+            if (roofPoints[f].y < result) {
+                result = roofPoints[f].y;
+            }
+        }
+
+        return Math.abs(result);
+    }
+
+    _findLeftPaddingForRoof(roofPoints) {
+        let result = 999999;
+        let i;
+        for (i = 0; i < this.lineCounter; i = i + 1) {
+            if (roofPoints[i].x < result) {
+                result = roofPoints[i].x;
+            }
+        }
+
+        return Math.abs(result);
+    }
+
     _addPoint(opt) {
         this.canvas = this.getCanvas();
-        const id = this.idCounter += 1;
+        // const id = this.idCounter += 1;
         const {e, absolutePointer} = opt;
         const {x, y} = absolutePointer;
-        const circle = new fabric.Circle({
-            id,
-            radius: 10,
-            fill: '#ffffff',
-            stroke: '#00000',
-            strokeWidth: 0.5,
-            left: x,
-            top: y,
-            selectable: false,
-            hasBorders: false,
-            hasControls: false,
-            originX: 'center',
-            originY: 'center',
-            hoverCursor: 'pointer'
-        });
-        if (!this.pointArray.length) {
-            circle.set({
-                fill: 'red'
-            });
-        }
+        // const circle = new fabric.Circle({
+        //     id,
+        //     radius: 10,
+        //     fill: '#ffffff',
+        //     stroke: '#00000',
+        //     strokeWidth: 0.5,
+        //     left: x,
+        //     top: y,
+        //     selectable: false,
+        //     hasBorders: false,
+        //     hasControls: false,
+        //     originX: 'center',
+        //     originY: 'center',
+        //     hoverCursor: 'pointer'
+        // });
+        // if (!this.pointArray.length) {
+        //     circle.set({
+        //         fill: 'red'
+        //     });
+        // }
         const points = [x, y, x, y];
         const line = new fabric.Line(points, {
             strokeWidth: 2,
@@ -257,10 +351,10 @@ class Polygon extends Component {
             this.canvas.add(this.polygon);
         }
         this.activeLine = line;
-        this.pointArray.push(circle);
+        // this.pointArray.push(circle);
         this.lineArray.push(line);
         this.canvas.add(line);
-        this.canvas.add(circle);
+        // this.canvas.add(circle);
     }
 
     _generate(pointArray) {
@@ -294,7 +388,7 @@ class Polygon extends Component {
         const params = this.graphics.createObjectProperties(this.polygon);
 
         this.fire(eventNames.ADD_OBJECT, params);
-        // this.pointArray = [];
+        this.pointArray = [];
         // this.activeLine = null;
         // this.activeShape = null;
     }

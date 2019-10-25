@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.7
+ * @version 3.7.8
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1945,7 +1945,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_onAddObject',
 	        value: function _onAddObject(objectProps) {
-	            console.log(objectProps.id);
 	            var obj = this._graphics.getObject(objectProps.id);
 	            this._pushAddObjectCommand(obj);
 	            this._onCanvasModified();
@@ -5536,7 +5535,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_addSubMenuEvent',
 	        value: function _addSubMenuEvent(menuName) {
-	            console.log(menuName);
 	            this[menuName].addEvent(this._actions[menuName]);
 	        }
 
@@ -5565,7 +5563,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._initMenuEvent) {
 	                return;
 	            }
-	            console.log('aaaactive');
 	            this._addHelpActionEvent('undo');
 	            this._addHelpActionEvent('redo');
 	            this._addHelpActionEvent('reset');
@@ -8541,7 +8538,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var button = event.target.closest('.tui-image-editor-button');
 	            if (button) {
 	                var lineType = this.getButtonType(button, ['free', 'line', 'polygon']);
-	                console.log(lineType);
+
 	                this.actions.discardSelection();
 
 	                if (this.type === lineType) {
@@ -9350,7 +9347,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                } else {
 	                    _this3.startDrawingMode('POLYGON_DRAWING', settings);
 	                }
-	                console.log('jaaaa');
 	            },
 	            setColor: function setColor(color) {
 	                _this3.setBrush({
@@ -11369,7 +11365,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'startDrawingMode',
 	        value: function startDrawingMode(mode, option) {
-	            console.log(mode);
 	            if (this._isSameDrawingMode(mode)) {
 	                return true;
 	            }
@@ -12160,7 +12155,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: '_onPathCreated',
 	        value: function _onPathCreated(obj) {
-	            obj.path.set(_consts2.default.fObjectOptions.SELECTION_STYLE);
+	            var SELECTION_STYLE = Object.assign({}, _consts2.default.fObjectOptions.SELECTION_STYLE);
+	            SELECTION_STYLE.originX = 'left';
+	            SELECTION_STYLE.originY = 'top';
+	            obj.path.set(SELECTION_STYLE);
 
 	            var params = this.createObjectProperties(obj.path);
 
@@ -14270,17 +14268,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author NHN Ent. FE Development Team <dl_javascript@nhn.com>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @fileoverview Free drawing module, Set brush
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } /**
+	                                                                                                                                                           * @author NHN Ent. FE Development Team <dl_javascript@nhn.com>
+	                                                                                                                                                           * @fileoverview Free drawing module, Set brush
+	                                                                                                                                                           */
 
 
 	var eventNames = _consts2.default.eventNames;
+
+	var Point = function Point(x, y) {
+	    _classCallCheck(this, Point);
+
+	    this.x = x;
+	    this.y = y;
+	};
 
 	/**
 	 * Line
@@ -14289,6 +14294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends {Component}
 	 * @ignore
 	 */
+
 
 	var Polygon = function (_Component) {
 	    _inherits(Polygon, _Component);
@@ -14309,6 +14315,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.lineArray = [];
 	        _this.activeLine = null;
 	        _this.activeShape = null;
+	        _this.x = 0;
+	        _this.y = 0;
+	        _this.roof = null;
+	        _this.roofPoints = [];
+	        _this.lines = [];
+	        _this.lineCounter = 0;
+	        _this.drawingObject = {
+	            type: '',
+	            background: '',
+	            border: ''
+	        };
+
 	        /**
 	         * fabric.Color instance for brush color
 	         * @type {fabric.Color}
@@ -14324,7 +14342,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this._listeners = {
 	            mousedown: _this._onFabricMouseDown.bind(_this),
 	            mousemove: _this._onFabricMouseMove.bind(_this),
-	            mouseup: _this._onFabricMouseUp.bind(_this)
+	            mouseup: _this._onFabricMouseUp.bind(_this),
+	            doubleClick: _this._onFabricDoubleClick.bind(_this)
 	        };
 	        return _this;
 	    }
@@ -14339,7 +14358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'start',
 	        value: function start(setting) {
 	            var canvas = this.getCanvas();
-
+	            this.drawingObject.type = 'roof';
 	            canvas.defaultCursor = 'crosshair';
 	            canvas.selection = false;
 
@@ -14352,8 +14371,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            canvas.on({
-	                'mouse:down': this._listeners.mousedown
+	                'mouse:down': this._listeners.mousedown,
+	                'mouse:move': this._listeners.mousemove
 	            });
+
+	            _fabric2.default.util.addListener(window, 'dblclick', this._listeners.doubleClick);
 	        }
 
 	        /**
@@ -14364,8 +14386,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'setBrush',
 	        value: function setBrush(setting) {
-	            console.log(setting);
-
 	            var brush = this.getCanvas().freeDrawingBrush;
 
 	            setting = setting || {};
@@ -14397,64 +14417,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 
 	            canvas.off('mouse:down', this._listeners.mousedown);
+	            canvas.off('mouse:move', this._listeners.mousemove);
 	        }
 
 	        /**
 	         * Mousedown event handler in fabric canvas
-	         * @param {{target: fabric.Object, e: MouseEvent}} fEvent - Fabric event object
+	         * @param {{target: fabric.Object, e: MouseEvent}} options - Fabric event object
 	         * @private
 	         */
 
 	    }, {
 	        key: '_onFabricMouseDown',
-	        value: function _onFabricMouseDown(fEvent) {
-	            var target = fEvent.target;
-	            // const canvas = this.getCanvas();
-	            // const pointer = canvas.getPointer(fEvent.e);
-	            // const points = [pointer.x, pointer.y, pointer.x, pointer.y];
+	        value: function _onFabricMouseDown(options) {
+	            var canvas = this.getCanvas();
 
-	            // this._line = new fabric.Line(points, {
-	            //     stroke: this._oColor.toRgba(),
-	            //     strokeWidth: this._width,
-	            //     evented: false
-	            // });
-
-	            // this._line.set(consts.fObjectOptions.SELECTION_STYLE);
-
-	            // canvas.add(this._line);
-
-	            // canvas.on({
-	            //     'mouse:move': this._listeners.mousemove,
-	            //     'mouse:up': this._listeners.mouseup
-	            // });
-
-	            if (target && this.pointArray.length && target.id === this.pointArray[0].id) {
-	                this._generate(this.pointArray);
-	            } else {
-	                this._addPoint(fEvent);
+	            if (this.drawingObject.type === 'roof') {
+	                canvas.selection = false;
+	                this._setStartingPoint(options); // set x,y
+	                this.roofPoints.push(new Point(this.x, this.y));
+	                var points = [this.x, this.y, this.x, this.y];
+	                this.lines.push(new _fabric2.default.Line(points, {
+	                    strokeWidth: 3,
+	                    selectable: false,
+	                    stroke: 'red'
+	                }));
+	                // .setOriginX(this.x)
+	                // .setOriginY(this.y));
+	                canvas.add(this.lines[this.lineCounter]);
+	                this.lineCounter = this.lineCounter + 1;
+	                // canvas.on('mouse:up', opts => {
+	                //     opts.selection = true;
+	                // });
 	            }
 	        }
 
 	        /**
 	         * Mousemove event handler in fabric canvas
-	         * @param {{target: fabric.Object, e: MouseEvent}} fEvent - Fabric event object
+	         * @param {{target: fabric.Object, e: MouseEvent}} options - Fabric event object
 	         * @private
 	         */
 
 	    }, {
 	        key: '_onFabricMouseMove',
-	        value: function _onFabricMouseMove(fEvent) {
+	        value: function _onFabricMouseMove(options) {
 	            var canvas = this.getCanvas();
-	            var pointer = canvas.getPointer(fEvent.e);
+	            // const pointer = canvas.getPointer(fEvent.e);
 
-	            this._line.set({
-	                x2: pointer.x,
-	                y2: pointer.y
-	            });
+	            // this._line.set({
+	            //     x2: pointer.x,
+	            //     y2: pointer.y
+	            // });
 
-	            this._line.setCoords();
+	            // this._line.setCoords();
 
-	            canvas.renderAll();
+	            // canvas.renderAll();
+	            if (this.lines.length > 0 && this.lines[0] !== null && this.lines[0] !== 'undefined' && this.drawingObject.type === 'roof') {
+	                this._setStartingPoint(options);
+	                this.lines[this.lineCounter - 1].set({
+	                    x2: this.x,
+	                    y2: this.y
+	                });
+	                canvas.renderAll();
+	            }
 	        }
 
 	        /**
@@ -14479,35 +14503,113 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }, {
+	        key: '_onFabricDoubleClick',
+	        value: function _onFabricDoubleClick() {
+	            var canvas = this.getCanvas();
+	            this.drawingObject.type = '';
+	            this.lines.forEach(function (value) {
+	                canvas.remove(value);
+	            });
+	            // canvas.remove(lines[lineCounter - 1]);
+	            this.roof = this._makeRoof(this.roofPoints);
+	            // this.roof.set(consts.fObjectOptions.SELECTION_STYLE);
+
+	            canvas.add(this.roof);
+	            canvas.renderAll();
+	            // clear arrays
+	            this.roofPoints = [];
+	            this.lines = [];
+	            this.lineCounter = 0;
+	            this.graphics.stopDrawingMode();
+	        }
+	    }, {
+	        key: '_setStartingPoint',
+	        value: function _setStartingPoint(options) {
+	            var _options$absolutePoin = options.absolutePointer,
+	                x = _options$absolutePoin.x,
+	                y = _options$absolutePoin.y;
+	            // const canvas = this.getCanvas();
+	            // const offset = canvas.offset();
+
+	            this.x = x;
+	            this.y = y;
+	        }
+	    }, {
+	        key: '_makeRoof',
+	        value: function _makeRoof(roofPoints) {
+	            var left = this._findLeftPaddingForRoof(roofPoints);
+	            var top = this._findTopPaddingForRoof(roofPoints);
+	            roofPoints.push(new Point(roofPoints[0].x, roofPoints[0].y));
+	            var roof = new _fabric2.default.Polygon(roofPoints, {
+	                stroke: '#58c',
+	                strokeWidth: 1,
+	                fill: this._oColor.toRgba(),
+	                opacity: 1,
+	                hasControls: true
+	            });
+	            roof.set({
+	                left: left,
+	                top: top
+	            });
+
+	            return roof;
+	        }
+	    }, {
+	        key: '_findTopPaddingForRoof',
+	        value: function _findTopPaddingForRoof(roofPoints) {
+	            var result = 999999;
+	            var f = void 0;
+	            for (f = 0; f < this.lineCounter; f = f + 1) {
+	                if (roofPoints[f].y < result) {
+	                    result = roofPoints[f].y;
+	                }
+	            }
+
+	            return Math.abs(result);
+	        }
+	    }, {
+	        key: '_findLeftPaddingForRoof',
+	        value: function _findLeftPaddingForRoof(roofPoints) {
+	            var result = 999999;
+	            var i = void 0;
+	            for (i = 0; i < this.lineCounter; i = i + 1) {
+	                if (roofPoints[i].x < result) {
+	                    result = roofPoints[i].x;
+	                }
+	            }
+
+	            return Math.abs(result);
+	        }
+	    }, {
 	        key: '_addPoint',
 	        value: function _addPoint(opt) {
 	            this.canvas = this.getCanvas();
-	            var id = this.idCounter += 1;
+	            // const id = this.idCounter += 1;
 	            var e = opt.e,
 	                absolutePointer = opt.absolutePointer;
 	            var x = absolutePointer.x,
 	                y = absolutePointer.y;
+	            // const circle = new fabric.Circle({
+	            //     id,
+	            //     radius: 10,
+	            //     fill: '#ffffff',
+	            //     stroke: '#00000',
+	            //     strokeWidth: 0.5,
+	            //     left: x,
+	            //     top: y,
+	            //     selectable: false,
+	            //     hasBorders: false,
+	            //     hasControls: false,
+	            //     originX: 'center',
+	            //     originY: 'center',
+	            //     hoverCursor: 'pointer'
+	            // });
+	            // if (!this.pointArray.length) {
+	            //     circle.set({
+	            //         fill: 'red'
+	            //     });
+	            // }
 
-	            var circle = new _fabric2.default.Circle({
-	                id: id,
-	                radius: 10,
-	                fill: '#ffffff',
-	                stroke: '#00000',
-	                strokeWidth: 0.5,
-	                left: x,
-	                top: y,
-	                selectable: false,
-	                hasBorders: false,
-	                hasControls: false,
-	                originX: 'center',
-	                originY: 'center',
-	                hoverCursor: 'pointer'
-	            });
-	            if (!this.pointArray.length) {
-	                circle.set({
-	                    fill: 'red'
-	                });
-	            }
 	            var points = [x, y, x, y];
 	            var line = new _fabric2.default.Line(points, {
 	                strokeWidth: 2,
@@ -14561,10 +14663,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.canvas.add(this.polygon);
 	            }
 	            this.activeLine = line;
-	            this.pointArray.push(circle);
+	            // this.pointArray.push(circle);
 	            this.lineArray.push(line);
 	            this.canvas.add(line);
-	            this.canvas.add(circle);
+	            // this.canvas.add(circle);
 	        }
 	    }, {
 	        key: '_generate',
@@ -14601,7 +14703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var params = this.graphics.createObjectProperties(this.polygon);
 
 	            this.fire(eventNames.ADD_OBJECT, params);
-	            // this.pointArray = [];
+	            this.pointArray = [];
 	            // this.activeLine = null;
 	            // this.activeShape = null;
 	        }

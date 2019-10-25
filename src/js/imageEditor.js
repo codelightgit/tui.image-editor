@@ -1151,7 +1151,6 @@ class ImageEditor {
      * @private
      */
     _onAddObject(objectProps) {
-        console.log(objectProps.id);
         const obj = this._graphics.getObject(objectProps.id);
         this._pushAddObjectCommand(obj);
         this._onCanvasModified();

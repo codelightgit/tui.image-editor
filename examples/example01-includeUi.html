@@ -31,10 +31,10 @@
          // Image editor
          var imageEditor = new tui.ImageEditor('#tui-image-editor-container', {
              includeUI: {
-                //  loadImage: {
-                //      path: 'img/sampleImage2.png',
-                //      name: 'SampleImage'
-                //  },
+                 loadImage: {
+                     path: 'img/sampleImage2.png',
+                     name: 'SampleImage'
+                 },
                  theme: blackTheme, // or whiteTheme
                  initMenu: 'draw',
                  menuBarPosition: 'bottom'
@@ -48,7 +48,6 @@
          })
 
          imageEditor.on('imageChanged', (e) => {
-             console.log('ssss')
          })
 
          window.onresize = function() {
@@ -57,7 +56,6 @@
 
          function exp() {
              const json = imageEditor.toJson()
-             console.log(json)
          }
 
          function restore() {

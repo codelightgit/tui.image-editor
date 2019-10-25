@@ -228,7 +228,6 @@ export default {
                 } else {
                     this.startDrawingMode('POLYGON_DRAWING', settings);
                 }
-                console.log('jaaaa');
             },
             setColor: color => {
                 this.setBrush({

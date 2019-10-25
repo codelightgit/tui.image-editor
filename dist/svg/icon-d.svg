@@ -32,6 +32,12 @@
     <g fill="none" fill-rule="evenodd">
         <path stroke="#8a8a8a" d="M2 15.5h28"/>
     </g>
+</symbol><symbol id="icon-d-ic-draw-polygon" viewBox="0 0 16 16">
+    <g fill="none" fill-rule="evenodd" id="Icons with numbers" stroke="none" stroke-width="1">
+        <g id="Group" transform="translate(-336.000000, -480.000000)">
+            <path stroke="#8a8a8a" d="M344,480 L351.986694,486.039185 L347.973511,495.993042 L340.019287,495.993042 L336.026611,486.039185 Z M344,481 L337.023285,486.284286 L340.516876,494.993912 L347.476822,494.993912 L350.988358,486.284286 Z M344,481" id="Polygon 179 copy"/>
+        </g>    
+    </g>
 </symbol><symbol id="icon-d-ic-draw" viewBox="0 0 24 24">
     <g fill="none">
         <path stroke="#8a8a8a" d="M2.5 21.5H5c.245 0 .48-.058.691-.168l.124-.065.14.01c.429.028.85-.127 1.16-.437L22.55 5.405a.5.5 0 0 0 0-.707l-3.246-3.245a.5.5 0 0 0-.707 0L3.162 16.888a1.495 1.495 0 0 0-.437 1.155l.01.14-.065.123c-.111.212-.17.448-.17.694v2.5z"/>

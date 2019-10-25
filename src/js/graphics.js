@@ -369,7 +369,6 @@ class Graphics {
      * @returns {boolean} true if success or false
      */
     startDrawingMode(mode, option) {
-        console.log(mode);
         if (this._isSameDrawingMode(mode)) {
             return true;
         }
@@ -547,8 +546,7 @@ class Graphics {
                 resolve(this.createObjectProperties(image));
             }, {
                 crossOrigin: 'Anonymous'
-            }
-            );
+            });
         });
     }
 
@@ -1012,7 +1010,10 @@ class Graphics {
      * @private
      */
     _onPathCreated(obj) {
-        obj.path.set(consts.fObjectOptions.SELECTION_STYLE);
+        const SELECTION_STYLE = Object.assign({}, consts.fObjectOptions.SELECTION_STYLE);
+        SELECTION_STYLE.originX = 'left';
+        SELECTION_STYLE.originY = 'top';
+        obj.path.set(SELECTION_STYLE);
 
         const params = this.createObjectProperties(obj.path);
 

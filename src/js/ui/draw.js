@@ -90,7 +90,7 @@ class Draw extends Submenu {
         const button = event.target.closest('.tui-image-editor-button');
         if (button) {
             const lineType = this.getButtonType(button, ['free', 'line', 'polygon']);
-            console.log(lineType);
+
             this.actions.discardSelection();
 
             if (this.type === lineType) {
