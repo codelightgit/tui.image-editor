@@ -545,7 +545,7 @@ class Graphics {
                 callback(image);
                 resolve(this.createObjectProperties(image));
             }, {
-                crossOrigin: 'Anonymous'
+                crossOrigin: 'use-credentials'
             });
         });
     }
@@ -906,7 +906,7 @@ class Graphics {
         obj.set({
             left: centerPos.x,
             top: centerPos.y,
-            crossOrigin: 'Anonymous'
+            crossOrigin: 'use-credentials'
         });
 
         this.getCanvas().add(obj).setActiveObject(obj);

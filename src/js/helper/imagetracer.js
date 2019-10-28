@@ -1091,7 +1091,7 @@ export default class ImageTracer {
     loadImage(url, callback, options) {
         const img = new Image();
         if (options && options.corsenabled) {
-            img.crossOrigin = 'Anonymous';
+            img.crossOrigin = 'use-credentials';
         }
         img.src = url;
         img.onload = function() {

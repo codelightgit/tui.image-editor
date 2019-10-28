@@ -10773,7 +10773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function loadImage(url, callback, options) {
 	            var img = new Image();
 	            if (options && options.corsenabled) {
-	                img.crossOrigin = 'Anonymous';
+	                img.crossOrigin = 'use-credentials';
 	            }
 	            img.src = url;
 	            img.onload = function () {
@@ -11587,7 +11587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    callback(image);
 	                    resolve(_this.createObjectProperties(image));
 	                }, {
-	                    crossOrigin: 'Anonymous'
+	                    crossOrigin: 'use-credentials'
 	                });
 	            });
 	        }
@@ -12024,7 +12024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            obj.set({
 	                left: centerPos.x,
 	                top: centerPos.y,
-	                crossOrigin: 'Anonymous'
+	                crossOrigin: 'use-credentials'
 	            });
 
 	            this.getCanvas().add(obj).setActiveObject(obj);
@@ -12335,7 +12335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var imageOption = {
 	    padding: 0,
-	    crossOrigin: 'Anonymous'
+	    crossOrigin: 'use-credentials'
 	};
 
 	/**
