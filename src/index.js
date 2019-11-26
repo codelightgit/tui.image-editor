@@ -10,6 +10,7 @@ import './js/command/addShape';
 import './js/command/addText';
 import './js/command/applyFilter';
 import './js/command/changeIconColor';
+import './js/command/changePolygonColor';
 import './js/command/changeShape';
 import './js/command/changeText';
 import './js/command/changeTextStyle';

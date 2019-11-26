@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.8
+ * @version 3.7.10
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -108,11 +108,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	__webpack_require__(153);
 
+	__webpack_require__(154);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	module.exports = _imageEditor2.default;
-
 	// commands
+	module.exports = _imageEditor2.default;
 
 /***/ }),
 /* 1 */
@@ -2066,6 +2067,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'changeIconColor',
 	        value: function changeIconColor(id, color) {
 	            return this.execute(commands.CHANGE_ICON_COLOR, id, color);
+	        }
+	    }, {
+	        key: 'changeObjectColor',
+	        value: function changeObjectColor(id, color) {
+	            return this.execute(commands.CHANGE_POLYGON_COLOR, id, color);
 	        }
 	    }, {
 	        key: 'toObject',
@@ -4819,6 +4825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'REMOVE_FILTER': 'removeFilter',
 	        'ADD_ICON': 'addIcon',
 	        'CHANGE_ICON_COLOR': 'changeIconColor',
+	        'CHANGE_POLYGON_COLOR': 'changePolygonColor',
 	        'ADD_SHAPE': 'addShape',
 	        'CHANGE_SHAPE': 'changeShape',
 	        'ADD_TEXT': 'addText',
@@ -8564,6 +8571,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: '_changeDrawColor',
 	        value: function _changeDrawColor(color) {
 	            this.color = color || 'transparent';
+
+	            if (this.type === 'polygon') {
+	                this.actions.changeColor(color);
+
+	                return;
+	            }
 	            if (!this.type) {
 	                this.changeStartMode();
 	            } else {
@@ -9352,6 +9365,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this3.setBrush({
 	                    color: color
 	                });
+	            },
+	            changeColor: function changeColor(color) {
+	                if (_this3.activeObjectId) {
+	                    _this3.changeObjectColor(_this3.activeObjectId, color);
+	                }
 	            }
 	        }, this._commonAction());
 	    },
@@ -14387,7 +14405,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'setBrush',
 	        value: function setBrush(setting) {
 	            var brush = this.getCanvas().freeDrawingBrush;
-
 	            setting = setting || {};
 	            this._width = setting.width || this._width;
 
@@ -14396,6 +14413,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            brush.width = this._width;
 	            brush.color = this._oColor.toRgba();
+	        }
+	    }, {
+	        key: 'setColor',
+	        value: function setColor(color, obj) {
+	            this._oColor = _fabric2.default.Color.fromHex(color);
+	            this._oColor.setAlpha(0.5);
+	            var hexColor = '#' + this._oColor.toHexa();
+	            if (obj) {
+	                obj.set({ fill: hexColor });
+	                this.getCanvas().renderAll();
+	            }
+	        }
+	    }, {
+	        key: 'getColor',
+	        value: function getColor(obj) {
+	            return obj.fill;
 	        }
 
 	        /**
@@ -18291,6 +18324,85 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _command = __webpack_require__(69);
+
+	var _command2 = _interopRequireDefault(_command);
+
+	var _promise = __webpack_require__(4);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	var _consts = __webpack_require__(73);
+
+	var _consts2 = _interopRequireDefault(_consts);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var componentNames = _consts2.default.componentNames,
+	    rejectMessages = _consts2.default.rejectMessages,
+	    commandNames = _consts2.default.commandNames; /**
+	                                                   * @author NHN Ent. FE Development Team <dl_javascript@nhn.com>
+	                                                   * @fileoverview Change icon color
+	                                                   */
+
+	var POLYGON = componentNames.POLYGON;
+
+
+	var command = {
+	    name: commandNames.CHANGE_POLYGON_COLOR,
+
+	    /**
+	     * Change icon color
+	     * @param {Graphics} graphics - Graphics instance
+	     * @param {number} id - object id
+	     * @param {string} color - Color for icon
+	     * @returns {Promise}
+	     */
+	    execute: function execute(graphics, id, color) {
+	        var _this = this;
+
+	        return new _promise2.default(function (resolve, reject) {
+	            var iconComp = graphics.getComponent(POLYGON);
+	            var targetObj = graphics.getObject(id);
+
+	            if (!targetObj) {
+	                reject(rejectMessages.noObject);
+	            }
+
+	            _this.undoData.object = targetObj;
+	            _this.undoData.color = iconComp.getColor(targetObj);
+	            iconComp.setColor(color, targetObj);
+	            resolve();
+	        });
+	    },
+
+	    /**
+	     * @param {Graphics} graphics - Graphics instance
+	     * @returns {Promise}
+	     */
+	    undo: function undo(graphics) {
+	        var comp = graphics.getComponent(POLYGON);
+	        var _undoData$object = this.undoData.object,
+	            icon = _undoData$object.object,
+	            color = _undoData$object.color;
+
+
+	        comp.setColor(color, icon);
+
+	        return _promise2.default.resolve();
+	    }
+	};
+
+	_command2.default.register(command);
+
+	module.exports = command;
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _tuiCodeSnippet = __webpack_require__(3);
 
 	var _tuiCodeSnippet2 = _interopRequireDefault(_tuiCodeSnippet);
@@ -18378,7 +18490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18451,7 +18563,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18540,7 +18652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18598,7 +18710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18655,7 +18767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18743,7 +18855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18803,7 +18915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18866,7 +18978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18931,7 +19043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19000,7 +19112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19087,7 +19199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = command;
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

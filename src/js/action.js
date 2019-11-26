@@ -233,6 +233,11 @@ export default {
                 this.setBrush({
                     color
                 });
+            },
+            changeColor: color => {
+                if (this.activeObjectId) {
+                    this.changeObjectColor(this.activeObjectId, color);
+                }
             }
         }, this._commonAction());
     },

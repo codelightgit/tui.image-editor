@@ -38,6 +38,7 @@ module.exports = {
         'REMOVE_FILTER': 'removeFilter',
         'ADD_ICON': 'addIcon',
         'CHANGE_ICON_COLOR': 'changeIconColor',
+        'CHANGE_POLYGON_COLOR': 'changePolygonColor',
         'ADD_SHAPE': 'addShape',
         'CHANGE_SHAPE': 'changeShape',
         'ADD_TEXT': 'addText',

@@ -98,7 +98,6 @@ class Polygon extends Component {
      */
     setBrush(setting) {
         const brush = this.getCanvas().freeDrawingBrush;
-
         setting = setting || {};
         this._width = setting.width || this._width;
 
@@ -107,6 +106,20 @@ class Polygon extends Component {
         }
         brush.width = this._width;
         brush.color = this._oColor.toRgba();
+    }
+
+    setColor(color, obj) {
+        this._oColor = fabric.Color.fromHex(color);
+        this._oColor.setAlpha(0.5);
+        const hexColor = `#${this._oColor.toHexa()}`;
+        if (obj) {
+            obj.set({fill: hexColor});
+            this.getCanvas().renderAll();
+        }
+    }
+
+    getColor(obj) {
+        return obj.fill;
     }
 
     /**

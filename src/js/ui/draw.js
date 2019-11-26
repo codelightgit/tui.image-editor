@@ -113,6 +113,12 @@ class Draw extends Submenu {
      */
     _changeDrawColor(color) {
         this.color = color || 'transparent';
+
+        if (this.type === 'polygon') {
+            this.actions.changeColor(color);
+
+            return;
+        }
         if (!this.type) {
             this.changeStartMode();
         } else {

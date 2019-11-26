@@ -1251,6 +1251,10 @@ class ImageEditor {
         return this.execute(commands.CHANGE_ICON_COLOR, id, color);
     }
 
+    changeObjectColor(id, color) {
+        return this.execute(commands.CHANGE_POLYGON_COLOR, id, color);
+    }
+
     toObject() {
         return this._graphics.toObject();
     }
