@@ -16,26 +16,7 @@ export default ({locale, iconStyle: {normal, active}}) => (`
                 </div>
                 <label> ${locale.localize('Bold')} </label>
             </div>
-            <div class="tui-image-editor-button italic">
-                <div>
-                    <svg class="svg_ic-submenu">
-                    <use xlink:href="${normal.path}#${normal.name}-ic-text-italic" class="normal"/>
-                    <use xlink:href="${active.path}#${active.name}-ic-text-italic" class="active"/>
-                    </svg>
-                </div>
-                <label> ${locale.localize('Italic')} </label>
-            </div>
-            <div class="tui-image-editor-button underline">
-                <div>
-                    <svg class="svg_ic-submenu">
-                        <use xlink:href="${normal.path}#${normal.name}-ic-text-underline"
-                            class="normal"/>
-                        <use xlink:href="${active.path}#${active.name}-ic-text-underline"
-                            class="active"/>
-                    </svg>
-                </div>
-                <label> ${locale.localize('Underline')} </label>
-            </div>
+           
         </li>
         <li class="tui-image-editor-partition">
             <div></div>
@@ -91,3 +72,24 @@ export default ({locale, iconStyle: {normal, active}}) => (`
         </li>
     </ul>
 `);
+
+// <div class="tui-image-editor-button italic">
+// <div>
+//     <svg class="svg_ic-submenu">
+//     <use xlink:href="${normal.path}#${normal.name}-ic-text-italic" class="normal"/>
+//     <use xlink:href="${active.path}#${active.name}-ic-text-italic" class="active"/>
+//     </svg>
+// </div>
+// <label> ${locale.localize('Italic')} </label>
+// </div>
+// <div class="tui-image-editor-button underline">
+// <div>
+//     <svg class="svg_ic-submenu">
+//         <use xlink:href="${normal.path}#${normal.name}-ic-text-underline"
+//             class="normal"/>
+//         <use xlink:href="${active.path}#${active.name}-ic-text-underline"
+//             class="active"/>
+//     </svg>
+// </div>
+// <label> ${locale.localize('Underline')} </label>
+// </div>
