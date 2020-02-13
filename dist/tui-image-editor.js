@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.12
+ * @version 3.7.13
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -8485,7 +8485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        _this._els = {
 	            lineSelectButton: _this.selector('#tie-draw-line-select-button'),
-	            drawColorpicker: new _colorpicker2.default(_this.selector('#tie-draw-color'), '#00a9ff', _this.toggleDirection, _this.usageStatistics),
+	            drawColorpicker: new _colorpicker2.default(_this.selector('#tie-draw-color'), '#FF4040', _this.toggleDirection, _this.usageStatistics),
 	            drawRange: new _range2.default(_this.selector('#tie-draw-range'), _consts.defaultDrawRangeValus),
 	            drawRangeValue: _this.selector('#tie-draw-range-value')
 	        };
