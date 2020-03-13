@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.13
+ * @version 3.7.14
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2092,6 +2092,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var restoreObj = JSON.parse(jsonStr);
 	            var imageUrl = restoreObj.backgroundImage.src;
+	            var crop = null;
+
 	            if (imageUrl) {
 	                this.loadImageFromURL(imageUrl, 'bg').then(function (result) {
 	                    _this2.ui.resizeEditor({
@@ -2105,8 +2107,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    _this2.ui.activeMenuEvent();
 	                });
 	            }
+	            forEach(restoreObj.objects, function (value, key) {
+	                if (value.type === 'cropzone') {
+	                    restoreObj.objects.splice(key, 1);
+	                    crop = value;
+	                }
+	            }, this);
 
-	            return this._graphics.loadFromJSON(jsonStr);
+	            this._graphics.loadFromJSON(JSON.stringify(restoreObj));
+
+	            return crop;
+	        }
+	    }, {
+	        key: 'loadFromJSONAndCrop',
+	        value: function loadFromJSONAndCrop(jsonStr) {
+	            /* TODO: blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
+	            const that = this;
+	            Promise.resolve(this.loadFromJSON(jsonStr)).then(
+	                crop => that.crop(crop)
+	            ); 
+	            */
+	            var crop = this.loadFromJSON(jsonStr);
+	            var self = this;
+	            setTimeout(function () {
+	                self.crop(crop);
+	            }, 2000);
 	        }
 
 	        /**

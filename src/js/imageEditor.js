@@ -1268,6 +1268,8 @@ class ImageEditor {
     loadFromJSON(jsonStr) {
         const restoreObj = JSON.parse(jsonStr);
         const imageUrl = restoreObj.backgroundImage.src;
+        let crop = null;
+
         if (imageUrl) {
             this.loadImageFromURL(imageUrl, 'bg')
                 .then(result => {
@@ -1282,8 +1284,30 @@ class ImageEditor {
                     this.ui.activeMenuEvent();
                 });
         }
+        forEach(restoreObj.objects, (value, key) => {
+            if (value.type === 'cropzone') {
+                restoreObj.objects.splice(key, 1);
+                crop = value;
+            }
+        }, this);
 
-        return this._graphics.loadFromJSON(jsonStr);
+        this._graphics.loadFromJSON(JSON.stringify(restoreObj));
+
+        return crop;
+    }
+
+    loadFromJSONAndCrop(jsonStr) {
+        /* TODO: blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
+        const that = this;
+        Promise.resolve(this.loadFromJSON(jsonStr)).then(
+            crop => that.crop(crop)
+        ); 
+        */
+        const crop = this.loadFromJSON(jsonStr);
+        const self = this;
+        setTimeout(() => {
+            self.crop(crop);
+        }, 2000);
     }
 
     /**
