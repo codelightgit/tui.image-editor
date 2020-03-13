@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.14
+ * @version 3.7.15
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2121,7 +2121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'loadFromJSONAndCrop',
 	        value: function loadFromJSONAndCrop(jsonStr) {
-	            /* TODO: blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
+	            /* blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
 	            const that = this;
 	            Promise.resolve(this.loadFromJSON(jsonStr)).then(
 	                crop => that.crop(crop)
@@ -2129,9 +2129,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            */
 	            var crop = this.loadFromJSON(jsonStr);
 	            var self = this;
-	            setTimeout(function () {
-	                self.crop(crop);
-	            }, 2000);
+	            if (crop) {
+	                setTimeout(function () {
+	                    self.crop(crop);
+	                }, 2000);
+	            }
 	        }
 
 	        /**
@@ -17104,7 +17106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var origin = shape.getPointByOrigin(originX, originY);
 	    var left = shape.left - (centerPoint.x - origin.x);
-	    var top = shape.top - (centerPoint.x - origin.y);
+	    var top = shape.top - (centerPoint.y - origin.y);
 
 	    shape.set({
 	        originX: originX,
@@ -17131,6 +17133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	    shape.setPositionByOrigin(origin, originX, originY);
+	    shape.setCoords();
 	}
 
 	/**

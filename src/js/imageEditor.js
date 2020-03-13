@@ -1297,7 +1297,7 @@ class ImageEditor {
     }
 
     loadFromJSONAndCrop(jsonStr) {
-        /* TODO: blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
+        /* blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
         const that = this;
         Promise.resolve(this.loadFromJSON(jsonStr)).then(
             crop => that.crop(crop)
@@ -1305,9 +1305,11 @@ class ImageEditor {
         */
         const crop = this.loadFromJSON(jsonStr);
         const self = this;
-        setTimeout(() => {
-            self.crop(crop);
-        }, 2000);
+        if (crop) {
+            setTimeout(() => {
+                self.crop(crop);
+            }, 2000);
+        }
     }
 
     /**
