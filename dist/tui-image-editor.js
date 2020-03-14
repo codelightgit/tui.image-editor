@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.15
+ * @version 3.7.16
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1612,15 +1612,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * Set states of current drawing shape
-	         * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+	         * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
 	         * @param {Object} [options] - Shape options
 	         *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	         *      @param {string} [options.stoke] - Shape outline color
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
 	         * @example
 	         * imageEditor.setDrawingShape('rect', {
@@ -1629,7 +1629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *     height: 200
 	         * });
 	         * @example
-	         * imageEditor.setDrawingShape('circle', {
+	         * imageEditor.setDrawingShape('ellipse', {
 	         *     fill: 'transparent',
 	         *     stroke: 'blue',
 	         *     strokeWidth: 3,
@@ -1643,7 +1643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *     isRegular: true
 	         * });
 	         * @example
-	         * imageEditor.setDrawingShape('circle', { // When resizing, the shape keep the 1:1 ratio
+	         * imageEditor.setDrawingShape('ellipse', { // When resizing, the shape keep the 1:1 ratio
 	         *     rx: 10,
 	         *     ry: 10,
 	         *     isRegular: true
@@ -1658,15 +1658,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * Add shape
-	         * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+	         * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
 	         * @param {Object} options - Shape options
 	         *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	         *      @param {string} [options.stroke] - Shape outline color
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {number} [options.left] - Shape x position
 	         *      @param {number} [options.top] - Shape y position
 	         *      @param {boolean} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
@@ -1683,7 +1683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *     isRegular: true
 	         * });
 	         * @example
-	         * imageEditor.addShape('circle', {
+	         * imageEditor.addShape('ellipse', {
 	         *     fill: 'red',
 	         *     stroke: 'blue',
 	         *     strokeWidth: 3,
@@ -1714,8 +1714,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {boolean} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
 	         * @returns {Promise}
 	         * @example
@@ -1729,7 +1729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * });
 	         * @example
 	         * // call after selecting shape object on canvas
-	         * imageEditor.changeShape(id, { // change circle
+	         * imageEditor.changeShape(id, { // change ellipse
 	         *     fill: 'red',
 	         *     stroke: 'blue',
 	         *     strokeWidth: 3,
@@ -5183,7 +5183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                applyCropSelectionStyle: true,
 	                applyGroupSelectionStyle: true,
 	                selectionStyle: {
-	                    cornerStyle: 'circle',
+	                    cornerStyle: 'ellipse',
 	                    cornerSize: 16,
 	                    cornerColor: '#fff',
 	                    cornerStrokeColor: '#fff',
@@ -6079,7 +6079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        submenuIconSize = _ref.submenuIconSize,
 	        menuIconSize = _ref.menuIconSize,
 	        biSize = _ref.biSize;
-	    return "\n    #tie-icon-add-button.icon-bubble .tui-image-editor-button[data-icontype=\"icon-bubble\"] label,\n    #tie-icon-add-button.icon-heart .tui-image-editor-button[data-icontype=\"icon-heart\"] label,\n    #tie-icon-add-button.icon-location .tui-image-editor-button[data-icontype=\"icon-location\"] label,\n    #tie-icon-add-button.icon-polygon .tui-image-editor-button[data-icontype=\"icon-polygon\"] label,\n    #tie-icon-add-button.icon-star .tui-image-editor-button[data-icontype=\"icon-star\"] label,\n    #tie-icon-add-button.icon-star-2 .tui-image-editor-button[data-icontype=\"icon-star-2\"] label,\n    #tie-icon-add-button.icon-arrow-3 .tui-image-editor-button[data-icontype=\"icon-arrow-3\"] label,\n    #tie-icon-add-button.icon-arrow-2 .tui-image-editor-button[data-icontype=\"icon-arrow-2\"] label,\n    #tie-icon-add-button.icon-arrow .tui-image-editor-button[data-icontype=\"icon-arrow\"] label,\n    #tie-icon-add-button.icon-bubble .tui-image-editor-button[data-icontype=\"icon-bubble\"] label,\n    #tie-draw-line-select-button.line .tui-image-editor-button.line label,\n    #tie-draw-line-select-button.free .tui-image-editor-button.free label,\n    #tie-flip-button.flipX .tui-image-editor-button.flipX label,\n    #tie-flip-button.flipY .tui-image-editor-button.flipY label,\n    #tie-flip-button.resetFlip .tui-image-editor-button.resetFlip label,\n    #tie-crop-button .tui-image-editor-button.apply.active label,\n    #tie-crop-preset-button .tui-image-editor-button.preset.active label,\n    #tie-shape-button.rect .tui-image-editor-button.rect label,\n    #tie-shape-button.circle .tui-image-editor-button.circle label,\n    #tie-shape-button.triangle .tui-image-editor-button.triangle label,\n    #tie-text-effect-button .tui-image-editor-button.active label,\n    #tie-text-align-button.left .tui-image-editor-button.left label,\n    #tie-text-align-button.center .tui-image-editor-button.center label,\n    #tie-text-align-button.right .tui-image-editor-button.right label,\n    #tie-mask-apply.apply.active .tui-image-editor-button.apply label,\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button:hover > label,\n    .tui-image-editor-container .tui-image-editor-checkbox input + label {\n        " + subMenuLabelActive + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button > label,\n    .tui-image-editor-container .tui-image-editor-range-wrap.tui-image-editor-newline.short label {\n        " + subMenuLabelNormal + "\n    }\n    .tui-image-editor-container .tui-image-editor-range-wrap label {\n        " + subMenuRangeTitle + "\n    }\n    .tui-image-editor-container .tui-image-editor-partition > div {\n        " + submenuPartitionVertical + "\n    }\n    .tui-image-editor-container.left .tui-image-editor-submenu .tui-image-editor-partition > div,\n    .tui-image-editor-container.right .tui-image-editor-submenu .tui-image-editor-partition > div {\n        " + submenuPartitionHorizontal + "\n    }\n    .tui-image-editor-container .tui-image-editor-checkbox input + label:before {\n        " + submenuCheckbox + "\n    }\n    .tui-image-editor-container .tui-image-editor-checkbox input:checked + label:before {\n        border: 0;\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-pointer {\n        " + submenuRangePointer + "\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-bar {\n        " + submenuRangeBar + "\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-subbar {\n        " + submenuRangeSubbar + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-pointer {\n        " + submenuDisabledRangePointer + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-subbar {\n        " + submenuDisabledRangeSubbar + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-bar {\n        " + submenuDisabledRangeBar + "\n    }\n    .tui-image-editor-container .tui-image-editor-range-value {\n        " + submenuRangeValue + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button .color-picker-value + label {\n        " + submenuColorpickerTitle + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button .color-picker-value {\n        " + submenuColorpickerButton + "\n    }\n    .tui-image-editor-container .svg_ic-menu {\n        " + menuIconSize + "\n    }\n    .tui-image-editor-container .svg_ic-submenu {\n        " + submenuIconSize + "\n    }\n    .tui-image-editor-container .tui-image-editor-controls-logo > img,\n    .tui-image-editor-container .tui-image-editor-header-logo > img {\n        " + biSize + "\n    }\n\n";
+	    return "\n    #tie-icon-add-button.icon-bubble .tui-image-editor-button[data-icontype=\"icon-bubble\"] label,\n    #tie-icon-add-button.icon-heart .tui-image-editor-button[data-icontype=\"icon-heart\"] label,\n    #tie-icon-add-button.icon-location .tui-image-editor-button[data-icontype=\"icon-location\"] label,\n    #tie-icon-add-button.icon-polygon .tui-image-editor-button[data-icontype=\"icon-polygon\"] label,\n    #tie-icon-add-button.icon-star .tui-image-editor-button[data-icontype=\"icon-star\"] label,\n    #tie-icon-add-button.icon-star-2 .tui-image-editor-button[data-icontype=\"icon-star-2\"] label,\n    #tie-icon-add-button.icon-arrow-3 .tui-image-editor-button[data-icontype=\"icon-arrow-3\"] label,\n    #tie-icon-add-button.icon-arrow-2 .tui-image-editor-button[data-icontype=\"icon-arrow-2\"] label,\n    #tie-icon-add-button.icon-arrow .tui-image-editor-button[data-icontype=\"icon-arrow\"] label,\n    #tie-icon-add-button.icon-bubble .tui-image-editor-button[data-icontype=\"icon-bubble\"] label,\n    #tie-draw-line-select-button.line .tui-image-editor-button.line label,\n    #tie-draw-line-select-button.free .tui-image-editor-button.free label,\n    #tie-flip-button.flipX .tui-image-editor-button.flipX label,\n    #tie-flip-button.flipY .tui-image-editor-button.flipY label,\n    #tie-flip-button.resetFlip .tui-image-editor-button.resetFlip label,\n    #tie-crop-button .tui-image-editor-button.apply.active label,\n    #tie-crop-preset-button .tui-image-editor-button.preset.active label,\n    #tie-shape-button.rect .tui-image-editor-button.rect label,\n    #tie-shape-button.ellipse .tui-image-editor-button.ellipse label,\n    #tie-shape-button.triangle .tui-image-editor-button.triangle label,\n    #tie-text-effect-button .tui-image-editor-button.active label,\n    #tie-text-align-button.left .tui-image-editor-button.left label,\n    #tie-text-align-button.center .tui-image-editor-button.center label,\n    #tie-text-align-button.right .tui-image-editor-button.right label,\n    #tie-mask-apply.apply.active .tui-image-editor-button.apply label,\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button:hover > label,\n    .tui-image-editor-container .tui-image-editor-checkbox input + label {\n        " + subMenuLabelActive + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button > label,\n    .tui-image-editor-container .tui-image-editor-range-wrap.tui-image-editor-newline.short label {\n        " + subMenuLabelNormal + "\n    }\n    .tui-image-editor-container .tui-image-editor-range-wrap label {\n        " + subMenuRangeTitle + "\n    }\n    .tui-image-editor-container .tui-image-editor-partition > div {\n        " + submenuPartitionVertical + "\n    }\n    .tui-image-editor-container.left .tui-image-editor-submenu .tui-image-editor-partition > div,\n    .tui-image-editor-container.right .tui-image-editor-submenu .tui-image-editor-partition > div {\n        " + submenuPartitionHorizontal + "\n    }\n    .tui-image-editor-container .tui-image-editor-checkbox input + label:before {\n        " + submenuCheckbox + "\n    }\n    .tui-image-editor-container .tui-image-editor-checkbox input:checked + label:before {\n        border: 0;\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-pointer {\n        " + submenuRangePointer + "\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-bar {\n        " + submenuRangeBar + "\n    }\n    .tui-image-editor-container .tui-image-editor-virtual-range-subbar {\n        " + submenuRangeSubbar + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-pointer {\n        " + submenuDisabledRangePointer + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-subbar {\n        " + submenuDisabledRangeSubbar + "\n    }\n    .tui-image-editor-container .tui-image-editor-disabled .tui-image-editor-virtual-range-bar {\n        " + submenuDisabledRangeBar + "\n    }\n    .tui-image-editor-container .tui-image-editor-range-value {\n        " + submenuRangeValue + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button .color-picker-value + label {\n        " + submenuColorpickerTitle + "\n    }\n    .tui-image-editor-container .tui-image-editor-submenu .tui-image-editor-button .color-picker-value {\n        " + submenuColorpickerButton + "\n    }\n    .tui-image-editor-container .svg_ic-menu {\n        " + menuIconSize + "\n    }\n    .tui-image-editor-container .svg_ic-submenu {\n        " + submenuIconSize + "\n    }\n    .tui-image-editor-container .tui-image-editor-controls-logo > img,\n    .tui-image-editor-container .tui-image-editor-header-logo > img {\n        " + biSize + "\n    }\n\n";
 	};
 
 /***/ }),
@@ -6465,7 +6465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function changeStandbyMode() {
 	            this.type = null;
 	            this.actions.changeSelectableAll(true);
-	            this._els.shapeSelectButton.classList.remove('circle');
+	            this._els.shapeSelectButton.classList.remove('ellipse');
 	            this._els.shapeSelectButton.classList.remove('triangle');
 	            this._els.shapeSelectButton.classList.remove('rect');
 	        }
@@ -6521,7 +6521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (button) {
 	                this.actions.stopDrawingMode();
 	                this.actions.discardSelection();
-	                var shapeType = this.getButtonType(button, ['circle', 'triangle', 'rect']);
+	                var shapeType = this.getButtonType(button, ['ellipse', 'triangle', 'rect']);
 
 	                if (this.type === shapeType) {
 	                    this.changeStandbyMode();
@@ -7249,7 +7249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _ref$iconStyle = _ref.iconStyle,
 	        normal = _ref$iconStyle.normal,
 	        active = _ref$iconStyle.active;
-	    return '\n    <ul class="tui-image-editor-submenu-item">\n        <li id="tie-shape-button">\n            <div class="tui-image-editor-button rect">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-rectangle"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-rectangle"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Rectangle') + ' </label>\n            </div>\n            <div class="tui-image-editor-button circle">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-circle"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-circle"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Circle') + ' </label>\n            </div>\n            <div class="tui-image-editor-button triangle">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-triangle"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-triangle"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Triangle') + ' </label>\n            </div>\n        </li>\n        <li class="tui-image-editor-partition">\n            <div></div>\n        </li>\n        <li id="tie-shape-color-button">\n            <div id="tie-color-fill" title="' + locale.localize('Fill') + '"></div>\n            <div id="tie-color-stroke" title="' + locale.localize('Stroke') + '"></div>\n        </li>\n        <li class="tui-image-editor-partition only-left-right">\n            <div></div>\n        </li>\n        <li class="tui-image-editor-newline tui-image-editor-range-wrap">\n            <label class="range">' + locale.localize('Stroke') + '</label>\n            <div id="tie-stroke-range"></div>\n            <input id="tie-stroke-range-value" class="tui-image-editor-range-value" value="0" />\n        </li>\n    </ul>\n';
+	    return '\n    <ul class="tui-image-editor-submenu-item">\n        <li id="tie-shape-button">\n            <div class="tui-image-editor-button rect">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-rectangle"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-rectangle"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Rectangle') + ' </label>\n            </div>\n            <div class="tui-image-editor-button ellipse">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-ellipse"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-ellipse"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Ellipse') + ' </label>\n            </div>\n            <div class="tui-image-editor-button triangle">\n                <div>\n                    <svg class="svg_ic-submenu">\n                        <use xlink:href="' + normal.path + '#' + normal.name + '-ic-shape-triangle"\n                            class="normal"/>\n                        <use xlink:href="' + active.path + '#' + active.name + '-ic-shape-triangle"\n                            class="active"/>\n                    </svg>\n                </div>\n                <label> ' + locale.localize('Triangle') + ' </label>\n            </div>\n        </li>\n        <li class="tui-image-editor-partition">\n            <div></div>\n        </li>\n        <li id="tie-shape-color-button">\n            <div id="tie-color-fill" title="' + locale.localize('Fill') + '"></div>\n            <div id="tie-color-stroke" title="' + locale.localize('Stroke') + '"></div>\n        </li>\n        <li class="tui-image-editor-partition only-left-right">\n            <div></div>\n        </li>\n        <li class="tui-image-editor-newline tui-image-editor-range-wrap">\n            <label class="range">' + locale.localize('Stroke') + '</label>\n            <div id="tie-stroke-range"></div>\n            <input id="tie-stroke-range-value" class="tui-image-editor-range-value" value="0" />\n        </li>\n    </ul>\n';
 	};
 
 /***/ }),
@@ -9636,7 +9636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                if (obj.type === 'cropzone') {
 	                    _this11.ui.crop.changeApplyButtonStatus(true);
-	                } else if (['rect', 'circle', 'triangle'].indexOf(obj.type) > -1) {
+	                } else if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) > -1) {
 	                    _this11.stopDrawingMode();
 	                    if (_this11.ui.submenu !== 'shape') {
 	                        _this11.ui.changeMenu('shape', false, false);
@@ -9679,7 +9679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            },
 	            addObjectAfter: function addObjectAfter(obj) {
-	                if (['rect', 'circle', 'triangle'].indexOf(obj.type) > -1) {
+	                if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) > -1) {
 	                    _this11.ui.shape.setMaxStrokeValue(Math.min(obj.width, obj.height));
 	                    _this11.ui.shape.changeStandbyMode();
 	                }
@@ -9687,7 +9687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            objectScaled: function objectScaled(obj) {
 	                if (['i-text', 'text'].indexOf(obj.type) > -1) {
 	                    _this11.ui.text.fontSize = _util2.default.toInteger(obj.fontSize);
-	                } else if (['rect', 'circle', 'triangle'].indexOf(obj.type) >= 0) {
+	                } else if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) >= 0) {
 	                    var width = obj.width,
 	                        height = obj.height;
 
@@ -11729,15 +11729,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * Set states of current drawing shape
-	         * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+	         * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
 	         * @param {Object} [options] - Shape options
 	         *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	         *      @param {string} [options.stoke] - Shape outline color
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
 	         */
 
@@ -14670,7 +14670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                absolutePointer = opt.absolutePointer;
 	            var x = absolutePointer.x,
 	                y = absolutePointer.y;
-	            // const circle = new fabric.Circle({
+	            // const ellipse = new fabric.Ellipse({
 	            //     id,
 	            //     radius: 10,
 	            //     fill: '#ffffff',
@@ -14686,7 +14686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            //     hoverCursor: 'pointer'
 	            // });
 	            // if (!this.pointArray.length) {
-	            //     circle.set({
+	            //     ellipse.set({
 	            //         fill: 'red'
 	            //     });
 	            // }
@@ -14744,10 +14744,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.canvas.add(this.polygon);
 	            }
 	            this.activeLine = line;
-	            // this.pointArray.push(circle);
+	            // this.pointArray.push(ellipse);
 	            this.lineArray.push(line);
 	            this.canvas.add(line);
-	            // this.canvas.add(circle);
+	            // this.canvas.add(ellipse);
 	        }
 	    }, {
 	        key: '_generate',
@@ -16561,7 +16561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isRegular: false
 	};
 
-	var shapeType = ['rect', 'circle', 'triangle'];
+	var shapeType = ['rect', 'ellipse', 'triangle'];
 
 	/**
 	 * Shape
@@ -16687,15 +16687,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	         * Set states of the current drawing shape
 	         * @ignore
-	         * @param {string} type - Shape type (ex: 'rect', 'circle')
+	         * @param {string} type - Shape type (ex: 'rect', 'ellipse')
 	         * @param {Object} [options] - Shape options
 	         *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	         *      @param {string} [options.stoke] - Shape outline color
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         */
 
 	    }, {
@@ -16711,15 +16711,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /**
 	         * Add the shape
 	         * @ignore
-	         * @param {string} type - Shape type (ex: 'rect', 'circle')
+	         * @param {string} type - Shape type (ex: 'rect', 'ellipse')
 	         * @param {Object} options - Shape options
 	         *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	         *      @param {string} [options.stroke] - Shape outline color
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {number} [options.isRegular] - Whether scaling shape has 1:1 ratio or not
 	         * @returns {Promise}
 	         */
@@ -16754,8 +16754,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *      @param {number} [options.strokeWidth] - Shape outline width
 	         *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	         *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	         *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	         *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	         *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	         *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	         *      @param {number} [options.isRegular] - Whether scaling shape has 1:1 ratio or not
 	         * @returns {Promise}
 	         */
@@ -16793,9 +16793,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case 'rect':
 	                    instance = new _fabric2.default.Rect(options);
 	                    break;
-	                case 'circle':
+	                case 'ellipse':
 	                    instance = new _fabric2.default.Ellipse((0, _tuiCodeSnippet.extend)({
-	                        type: 'circle'
+	                        type: 'ellipse'
 	                    }, options));
 	                    break;
 	                case 'triangle':
@@ -17026,7 +17026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var DIVISOR = {
 	    rect: 1,
-	    circle: 2,
+	    ellipse: 2,
 	    triangle: 1
 	};
 	var DIMENSION_KEYS = {
@@ -17034,7 +17034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        w: 'width',
 	        h: 'height'
 	    },
-	    circle: {
+	    ellipse: {
 	        w: 'rx',
 	        h: 'ry'
 	    },
@@ -18080,15 +18080,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Add a shape
 	     * @param {Graphics} graphics - Graphics instance
-	     * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+	     * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
 	     * @param {Object} options - Shape options
 	     *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
 	     *      @param {string} [options.stroke] - Shape outline color
 	     *      @param {number} [options.strokeWidth] - Shape outline width
 	     *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	     *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	     *      @param {number} [options.left] - Shape x position
 	     *      @param {number} [options.top] - Shape y position
 	     *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
@@ -18493,8 +18493,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *      @param {number} [options.strokeWidth] - Shape outline width
 	     *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
 	     *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-	     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-	     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+	     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+	     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
 	     *      @param {number} [options.left] - Shape x position
 	     *      @param {number} [options.top] - Shape y position
 	     *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not

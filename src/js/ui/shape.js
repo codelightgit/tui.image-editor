@@ -96,7 +96,7 @@ class Shape extends Submenu {
     changeStandbyMode() {
         this.type = null;
         this.actions.changeSelectableAll(true);
-        this._els.shapeSelectButton.classList.remove('circle');
+        this._els.shapeSelectButton.classList.remove('ellipse');
         this._els.shapeSelectButton.classList.remove('triangle');
         this._els.shapeSelectButton.classList.remove('rect');
     }
@@ -140,7 +140,7 @@ class Shape extends Submenu {
         if (button) {
             this.actions.stopDrawingMode();
             this.actions.discardSelection();
-            const shapeType = this.getButtonType(button, ['circle', 'triangle', 'rect']);
+            const shapeType = this.getButtonType(button, ['ellipse', 'triangle', 'rect']);
 
             if (this.type === shapeType) {
                 this.changeStandbyMode();

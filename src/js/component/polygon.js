@@ -291,7 +291,7 @@ class Polygon extends Component {
         // const id = this.idCounter += 1;
         const {e, absolutePointer} = opt;
         const {x, y} = absolutePointer;
-        // const circle = new fabric.Circle({
+        // const ellipse = new fabric.Ellipse({
         //     id,
         //     radius: 10,
         //     fill: '#ffffff',
@@ -307,7 +307,7 @@ class Polygon extends Component {
         //     hoverCursor: 'pointer'
         // });
         // if (!this.pointArray.length) {
-        //     circle.set({
+        //     ellipse.set({
         //         fill: 'red'
         //     });
         // }
@@ -364,10 +364,10 @@ class Polygon extends Component {
             this.canvas.add(this.polygon);
         }
         this.activeLine = line;
-        // this.pointArray.push(circle);
+        // this.pointArray.push(ellipse);
         this.lineArray.push(line);
         this.canvas.add(line);
-        // this.canvas.add(circle);
+        // this.canvas.add(ellipse);
     }
 
     _generate(pointArray) {

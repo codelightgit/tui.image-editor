@@ -89,7 +89,7 @@ class Ui {
             applyCropSelectionStyle: true,
             applyGroupSelectionStyle: true,
             selectionStyle: {
-                cornerStyle: 'circle',
+                cornerStyle: 'ellipse',
                 cornerSize: 16,
                 cornerColor: '#fff',
                 cornerStrokeColor: '#fff',

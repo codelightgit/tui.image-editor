@@ -31,7 +31,7 @@ const DEFAULT_OPTIONS = {
     isRegular: false
 };
 
-const shapeType = ['rect', 'circle', 'triangle'];
+const shapeType = ['rect', 'ellipse', 'triangle'];
 
 /**
  * Shape
@@ -144,15 +144,15 @@ class Shape extends Component {
     /**
      * Set states of the current drawing shape
      * @ignore
-     * @param {string} type - Shape type (ex: 'rect', 'circle')
+     * @param {string} type - Shape type (ex: 'rect', 'ellipse')
      * @param {Object} [options] - Shape options
      *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
      *      @param {string} [options.stoke] - Shape outline color
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      */
     setStates(type, options) {
         this._type = type;
@@ -165,15 +165,15 @@ class Shape extends Component {
     /**
      * Add the shape
      * @ignore
-     * @param {string} type - Shape type (ex: 'rect', 'circle')
+     * @param {string} type - Shape type (ex: 'rect', 'ellipse')
      * @param {Object} options - Shape options
      *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
      *      @param {string} [options.stroke] - Shape outline color
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {number} [options.isRegular] - Whether scaling shape has 1:1 ratio or not
      * @returns {Promise}
      */
@@ -203,8 +203,8 @@ class Shape extends Component {
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {number} [options.isRegular] - Whether scaling shape has 1:1 ratio or not
      * @returns {Promise}
      */
@@ -234,9 +234,9 @@ class Shape extends Component {
             case 'rect':
                 instance = new fabric.Rect(options);
                 break;
-            case 'circle':
+            case 'ellipse':
                 instance = new fabric.Ellipse(extend({
-                    type: 'circle'
+                    type: 'ellipse'
                 }, options));
                 break;
             case 'triangle':

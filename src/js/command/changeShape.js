@@ -23,8 +23,8 @@ const command = {
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {number} [options.left] - Shape x position
      *      @param {number} [options.top] - Shape y position
      *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not

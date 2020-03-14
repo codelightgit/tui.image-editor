@@ -4,7 +4,7 @@
  */
 const DIVISOR = {
     rect: 1,
-    circle: 2,
+    ellipse: 2,
     triangle: 1
 };
 const DIMENSION_KEYS = {
@@ -12,7 +12,7 @@ const DIMENSION_KEYS = {
         w: 'width',
         h: 'height'
     },
-    circle: {
+    ellipse: {
         w: 'rx',
         h: 'ry'
     },

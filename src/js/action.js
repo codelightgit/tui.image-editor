@@ -430,7 +430,7 @@ export default {
 
                 if (obj.type === 'cropzone') {
                     this.ui.crop.changeApplyButtonStatus(true);
-                } else if (['rect', 'circle', 'triangle'].indexOf(obj.type) > -1) {
+                } else if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) > -1) {
                     this.stopDrawingMode();
                     if (this.ui.submenu !== 'shape') {
                         this.ui.changeMenu('shape', false, false);
@@ -473,7 +473,7 @@ export default {
                 });
             },
             addObjectAfter: obj => {
-                if (['rect', 'circle', 'triangle'].indexOf(obj.type) > -1) {
+                if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) > -1) {
                     this.ui.shape.setMaxStrokeValue(Math.min(obj.width, obj.height));
                     this.ui.shape.changeStandbyMode();
                 }
@@ -481,7 +481,7 @@ export default {
             objectScaled: obj => {
                 if (['i-text', 'text'].indexOf(obj.type) > -1) {
                     this.ui.text.fontSize = util.toInteger(obj.fontSize);
-                } else if (['rect', 'circle', 'triangle'].indexOf(obj.type) >= 0) {
+                } else if (['rect', 'ellipse', 'triangle'].indexOf(obj.type) >= 0) {
                     const {width, height} = obj;
                     const strokeValue = this.ui.shape.getStrokeValue();
 

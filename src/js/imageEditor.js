@@ -856,15 +856,15 @@ class ImageEditor {
 
     /**
      * Set states of current drawing shape
-     * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+     * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
      * @param {Object} [options] - Shape options
      *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
      *      @param {string} [options.stoke] - Shape outline color
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {number} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
      * @example
      * imageEditor.setDrawingShape('rect', {
@@ -873,7 +873,7 @@ class ImageEditor {
      *     height: 200
      * });
      * @example
-     * imageEditor.setDrawingShape('circle', {
+     * imageEditor.setDrawingShape('ellipse', {
      *     fill: 'transparent',
      *     stroke: 'blue',
      *     strokeWidth: 3,
@@ -887,7 +887,7 @@ class ImageEditor {
      *     isRegular: true
      * });
      * @example
-     * imageEditor.setDrawingShape('circle', { // When resizing, the shape keep the 1:1 ratio
+     * imageEditor.setDrawingShape('ellipse', { // When resizing, the shape keep the 1:1 ratio
      *     rx: 10,
      *     ry: 10,
      *     isRegular: true
@@ -899,15 +899,15 @@ class ImageEditor {
 
     /**
      * Add shape
-     * @param {string} type - Shape type (ex: 'rect', 'circle', 'triangle')
+     * @param {string} type - Shape type (ex: 'rect', 'ellipse', 'triangle')
      * @param {Object} options - Shape options
      *      @param {string} [options.fill] - Shape foreground color (ex: '#fff', 'transparent')
      *      @param {string} [options.stroke] - Shape outline color
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {number} [options.left] - Shape x position
      *      @param {number} [options.top] - Shape y position
      *      @param {boolean} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
@@ -924,7 +924,7 @@ class ImageEditor {
      *     isRegular: true
      * });
      * @example
-     * imageEditor.addShape('circle', {
+     * imageEditor.addShape('ellipse', {
      *     fill: 'red',
      *     stroke: 'blue',
      *     strokeWidth: 3,
@@ -952,8 +952,8 @@ class ImageEditor {
      *      @param {number} [options.strokeWidth] - Shape outline width
      *      @param {number} [options.width] - Width value (When type option is 'rect', this options can use)
      *      @param {number} [options.height] - Height value (When type option is 'rect', this options can use)
-     *      @param {number} [options.rx] - Radius x value (When type option is 'circle', this options can use)
-     *      @param {number} [options.ry] - Radius y value (When type option is 'circle', this options can use)
+     *      @param {number} [options.rx] - Radius x value (When type option is 'ellipse', this options can use)
+     *      @param {number} [options.ry] - Radius y value (When type option is 'ellipse', this options can use)
      *      @param {boolean} [options.isRegular] - Whether resizing shape has 1:1 ratio or not
      * @returns {Promise}
      * @example
@@ -967,7 +967,7 @@ class ImageEditor {
      * });
      * @example
      * // call after selecting shape object on canvas
-     * imageEditor.changeShape(id, { // change circle
+     * imageEditor.changeShape(id, { // change ellipse
      *     fill: 'red',
      *     stroke: 'blue',
      *     strokeWidth: 3,

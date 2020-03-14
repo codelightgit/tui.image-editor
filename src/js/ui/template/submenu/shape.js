@@ -18,16 +18,16 @@ export default ({locale, iconStyle: {normal, active}}) => (`
                 </div>
                 <label> ${locale.localize('Rectangle')} </label>
             </div>
-            <div class="tui-image-editor-button circle">
+            <div class="tui-image-editor-button ellipse">
                 <div>
                     <svg class="svg_ic-submenu">
-                        <use xlink:href="${normal.path}#${normal.name}-ic-shape-circle"
+                        <use xlink:href="${normal.path}#${normal.name}-ic-shape-ellipse"
                             class="normal"/>
-                        <use xlink:href="${active.path}#${active.name}-ic-shape-circle"
+                        <use xlink:href="${active.path}#${active.name}-ic-shape-ellipse"
                             class="active"/>
                     </svg>
                 </div>
-                <label> ${locale.localize('Circle')} </label>
+                <label> ${locale.localize('Ellipse')} </label>
             </div>
             <div class="tui-image-editor-button triangle">
                 <div>
