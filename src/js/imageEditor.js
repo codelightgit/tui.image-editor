@@ -550,7 +550,11 @@ class ImageEditor {
         // Inject an Graphics instance as first parameter
         const theArgs = [this._graphics].concat(args);
 
-        return this._invoker.execute(commandName, ...theArgs);
+        const rect = this.getCropzoneRect();
+        const ret = this._invoker.execute(commandName, ...theArgs);
+        this.setCropzoneRect(rect);
+
+        return ret;
     }
 
     /**

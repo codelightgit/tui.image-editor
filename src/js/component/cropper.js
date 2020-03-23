@@ -273,7 +273,7 @@ class Cropper extends Component {
     getCropzoneRect() {
         const cropzone = this._cropzone;
 
-        if (!cropzone.isValid()) {
+        if (!cropzone || !cropzone.isValid()) {
             return null;
         }
 
@@ -292,6 +292,10 @@ class Cropper extends Component {
     setCropzoneRect(presetRatio) {
         const canvas = this.getCanvas();
         const cropzone = this._cropzone;
+
+        if (!cropzone) {
+            return;
+        }
 
         canvas.discardActiveObject();
         canvas.selection = false;
