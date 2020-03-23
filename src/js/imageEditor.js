@@ -1264,7 +1264,7 @@ class ImageEditor {
 
         return JSON.stringify(canvasObject);
     }
-
+    /*
     loadFromJSON(jsonStr) {
         const restoreObj = JSON.parse(jsonStr);
         const imageUrl = restoreObj.backgroundImage.src;
@@ -1295,21 +1295,44 @@ class ImageEditor {
 
         return crop;
     }
+    */
 
-    loadFromJSONAndCrop(jsonStr) {
-        /* blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
-        const that = this;
-        Promise.resolve(this.loadFromJSON(jsonStr)).then(
-            crop => that.crop(crop)
-        ); 
-        */
-        const crop = this.loadFromJSON(jsonStr);
-        const self = this;
-        if (crop) {
-            setTimeout(() => {
-                self.crop(crop);
-            }, 2000);
+    loadFromJSON(jsonStr) {
+        const restoreObj = JSON.parse(jsonStr);
+        const imageUrl = restoreObj.backgroundImage.src;
+        let crop = null;
+
+        if (imageUrl) {
+            this.loadImageFromURL(imageUrl, 'bg')
+                .then(result => {
+                    this.ui.resizeEditor({
+                        imageSize: {
+                            oldWidth: result.oldWidth,
+                            oldHeight: result.oldHeight,
+                            newWidth: result.newWidth,
+                            newHeight: result.newHeight
+                        }
+                    });
+                    this.ui.activeMenuEvent();
+                });
         }
+        forEach(restoreObj.objects, (value, key) => {
+            if (value.type === 'cropzone') {
+                restoreObj.objects.splice(key, 1);
+                crop = value;
+            }
+        }, this);
+
+        const self = this;
+
+        this._graphics._canvas.loadFromJSON(JSON.stringify(restoreObj), () => {
+            if (crop) {
+                self.crop(crop).then(() => {
+                    self.stopDrawingMode();
+                    self.ui.resizeEditor();
+                });
+            }
+        });
     }
 
     /**
