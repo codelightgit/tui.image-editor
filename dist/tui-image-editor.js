@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.16
+ * @version 3.7.17
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1243,7 +1243,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // Inject an Graphics instance as first parameter
 	            var theArgs = [this._graphics].concat(args);
 
-	            return (_invoker = this._invoker).execute.apply(_invoker, [commandName].concat(theArgs));
+	            var rect = this.getCropzoneRect();
+	            var ret = (_invoker = this._invoker).execute.apply(_invoker, [commandName].concat(theArgs));
+	            this.setCropzoneRect(rect);
+
+	            return ret;
 	        }
 
 	        /**
@@ -2085,6 +2089,36 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            return JSON.stringify(canvasObject);
 	        }
+	        /*
+	        loadFromJSON(jsonStr) {
+	            const restoreObj = JSON.parse(jsonStr);
+	            const imageUrl = restoreObj.backgroundImage.src;
+	            let crop = null;
+	             if (imageUrl) {
+	                this.loadImageFromURL(imageUrl, 'bg')
+	                    .then(result => {
+	                        this.ui.resizeEditor({
+	                            imageSize: {
+	                                oldWidth: result.oldWidth,
+	                                oldHeight: result.oldHeight,
+	                                newWidth: result.newWidth,
+	                                newHeight: result.newHeight
+	                            }
+	                        });
+	                        this.ui.activeMenuEvent();
+	                    });
+	            }
+	            forEach(restoreObj.objects, (value, key) => {
+	                if (value.type === 'cropzone') {
+	                    restoreObj.objects.splice(key, 1);
+	                    crop = value;
+	                }
+	            }, this);
+	             this._graphics.loadFromJSON(JSON.stringify(restoreObj));
+	             return crop;
+	        }
+	        */
+
 	    }, {
 	        key: 'loadFromJSON',
 	        value: function loadFromJSON(jsonStr) {
@@ -2114,26 +2148,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }, this);
 
-	            this._graphics.loadFromJSON(JSON.stringify(restoreObj));
-
-	            return crop;
-	        }
-	    }, {
-	        key: 'loadFromJSONAndCrop',
-	        value: function loadFromJSONAndCrop(jsonStr) {
-	            /* blöd mit dem timeout... wäre besser mit promise chain, funzt aber noch nicht
-	            const that = this;
-	            Promise.resolve(this.loadFromJSON(jsonStr)).then(
-	                crop => that.crop(crop)
-	            ); 
-	            */
-	            var crop = this.loadFromJSON(jsonStr);
 	            var self = this;
-	            if (crop) {
-	                setTimeout(function () {
-	                    self.crop(crop);
-	                }, 2000);
-	            }
+
+	            this._graphics._canvas.loadFromJSON(JSON.stringify(restoreObj), function () {
+	                if (crop) {
+	                    self.crop(crop).then(function () {
+	                        self.stopDrawingMode();
+	                        self.ui.resizeEditor();
+	                    });
+	                }
+	            });
 	        }
 
 	        /**
@@ -13020,7 +13044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function getCropzoneRect() {
 	            var cropzone = this._cropzone;
 
-	            if (!cropzone.isValid()) {
+	            if (!cropzone || !cropzone.isValid()) {
 	                return null;
 	            }
 
@@ -13042,6 +13066,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function setCropzoneRect(presetRatio) {
 	            var canvas = this.getCanvas();
 	            var cropzone = this._cropzone;
+
+	            if (!cropzone) {
+	                return;
+	            }
 
 	            canvas.discardActiveObject();
 	            canvas.selection = false;
