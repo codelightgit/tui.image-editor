@@ -718,6 +718,14 @@ class ImageEditor {
     }
 
     /**
+     * Restore a cropzone square
+     * @param {cropRect} [cropRect] - restored cropzone object
+     */
+    restoreCropzoneRect(cropRect) {
+        this._graphics.restoreCropzoneRect(cropRect);
+    }
+
+    /**
      * Flip
      * @returns {Promise}
      * @param {string} type - 'flipX' or 'flipY' or 'reset'

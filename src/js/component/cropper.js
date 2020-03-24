@@ -312,6 +312,42 @@ class Cropper extends Component {
     }
 
     /**
+     * Restore a cropzone square
+     * @param {cropRect} [cropRect] - restored cropzone object
+     */
+    restoreCropzoneRect(cropRect) {
+        if (isNaN(cropRect.left) || isNaN(cropRect.top) || isNaN(cropRect.width) || isNaN(cropRect.height)) {
+            return;
+        }
+        const canvas = this.getCanvas();
+        canvas.discardActiveObject();
+        canvas.selection = false;
+        if (this._cropzone) {
+            canvas.remove(this._cropzone);
+        }
+        this._cropzone = new Cropzone(canvas, {
+            left: cropRect.left,
+            top: cropRect.top,
+            width: cropRect.width,
+            height: cropRect.height,
+            strokeWidth: cropRect.strokeWidth,
+            cornerSize: 10,
+            cornerColor: 'black',
+            fill: cropRect.fill,
+            hasRotatingPoint: false,
+            hasBorders: false,
+            lockScalingFlip: true,
+            lockRotation: true,
+            visible: false
+        }, this.graphics.cropSelectionStyle);
+
+        canvas.discardActiveObject();
+        canvas.selection = false;
+
+        canvas.add(this._cropzone);
+    }
+
+    /**
      * Set a cropzone square
      * @param {number} presetRatio - preset ratio
      * @returns {{left: number, top: number, width: number, height: number}}

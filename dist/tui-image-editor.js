@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.17
+ * @version 3.7.18
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1447,6 +1447,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'setCropzoneRect',
 	        value: function setCropzoneRect(mode) {
 	            this._graphics.setCropzoneRect(mode);
+	        }
+
+	        /**
+	         * Restore a cropzone square
+	         * @param {cropRect} [cropRect] - restored cropzone object
+	         */
+
+	    }, {
+	        key: 'restoreCropzoneRect',
+	        value: function restoreCropzoneRect(cropRect) {
+	            this._graphics.restoreCropzoneRect(cropRect);
 	        }
 
 	        /**
@@ -9544,12 +9555,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return (0, _tuiCodeSnippet.extend)({
 	            crop: function crop() {
-	                var cropRect = _this8.getCropzoneRect();
-	                if (cropRect) {
-	                    _this8.crop(cropRect).then(function () {
-	                        _this8.stopDrawingMode();
-	                        _this8.ui.resizeEditor();
-	                        _this8.ui.changeMenu('crop');
+	                var restoreObj = _this8.toObject();
+	                _this8.cropRect = null;
+	                for (var i = 0; i < restoreObj.objects.length; i = i + 1) {
+	                    var currentObj = restoreObj.objects[i];
+	                    if (currentObj.type === 'cropzone') {
+	                        _this8.cropRect = currentObj;
+	                    }
+	                }
+	                if (_this8.getCropzoneRect()) {
+	                    var self = _this8;
+	                    _this8.crop(_this8.getCropzoneRect()).then(function () {
+	                        self.restoreCropzoneRect(self.cropRect);
+	                        // self.stopDrawingMode();
+	                        self.ui.resizeEditor();
+	                        self.ui.changeMenu('crop');
 	                    })['catch'](function (message) {
 	                        return Promise.reject(message);
 	                    });
@@ -11716,6 +11736,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        /**
+	         * Restore a cropzone square
+	         * @param {cropRect} [cropRect] - restored cropzone object
+	         */
+
+	    }, {
+	        key: 'restoreCropzoneRect',
+	        value: function restoreCropzoneRect(cropRect) {
+	            this.getComponent(components.CROPPER).restoreCropzoneRect(cropRect);
+	        }
+
+	        /**
 	         * Get cropped image data
 	         * @param {Object} cropRect cropzone rect
 	         *  @param {Number} cropRect.left left position
@@ -13083,6 +13114,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (presetRatio) {
 	                canvas.setActiveObject(cropzone);
 	            }
+	        }
+
+	        /**
+	         * Restore a cropzone square
+	         * @param {cropRect} [cropRect] - restored cropzone object
+	         */
+
+	    }, {
+	        key: 'restoreCropzoneRect',
+	        value: function restoreCropzoneRect(cropRect) {
+	            if (isNaN(cropRect.left) || isNaN(cropRect.top) || isNaN(cropRect.width) || isNaN(cropRect.height)) {
+	                return;
+	            }
+	            var canvas = this.getCanvas();
+	            canvas.discardActiveObject();
+	            canvas.selection = false;
+	            if (this._cropzone) {
+	                canvas.remove(this._cropzone);
+	            }
+	            this._cropzone = new _cropzone2.default(canvas, {
+	                left: cropRect.left,
+	                top: cropRect.top,
+	                width: cropRect.width,
+	                height: cropRect.height,
+	                strokeWidth: cropRect.strokeWidth,
+	                cornerSize: 10,
+	                cornerColor: 'black',
+	                fill: cropRect.fill,
+	                hasRotatingPoint: false,
+	                hasBorders: false,
+	                lockScalingFlip: true,
+	                lockRotation: true,
+	                visible: false
+	            }, this.graphics.cropSelectionStyle);
+
+	            canvas.discardActiveObject();
+	            canvas.selection = false;
+
+	            canvas.add(this._cropzone);
 	        }
 
 	        /**

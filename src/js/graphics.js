@@ -575,6 +575,14 @@ class Graphics {
     }
 
     /**
+     * Restore a cropzone square
+     * @param {cropRect} [cropRect] - restored cropzone object
+     */
+    restoreCropzoneRect(cropRect) {
+        this.getComponent(components.CROPPER).restoreCropzoneRect(cropRect);
+    }
+
+    /**
      * Get cropped image data
      * @param {Object} cropRect cropzone rect
      *  @param {Number} cropRect.left left position

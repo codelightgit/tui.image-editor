@@ -325,12 +325,21 @@ export default {
     _cropAction() {
         return extend({
             crop: () => {
-                const cropRect = this.getCropzoneRect();
-                if (cropRect) {
-                    this.crop(cropRect).then(() => {
-                        this.stopDrawingMode();
-                        this.ui.resizeEditor();
-                        this.ui.changeMenu('crop');
+                const restoreObj = this.toObject();
+                this.cropRect = null;
+                for (let i = 0; i < restoreObj.objects.length; i = i + 1) {
+                    const currentObj = restoreObj.objects[i];
+                    if (currentObj.type === 'cropzone') {
+                        this.cropRect = currentObj;
+                    }
+                }
+                if (this.getCropzoneRect()) {
+                    const self = this;
+                    this.crop(this.getCropzoneRect()).then(() => {
+                        self.restoreCropzoneRect(self.cropRect);
+                        // self.stopDrawingMode();
+                        self.ui.resizeEditor();
+                        self.ui.changeMenu('crop');
                     })['catch'](message => (
                         Promise.reject(message)
                     ));
