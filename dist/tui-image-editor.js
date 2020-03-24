@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.18
+ * @version 3.7.19
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -12851,16 +12851,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(Cropper, [{
 	        key: 'start',
 	        value: function start() {
-	            if (this._cropzone) {
+	            if (this._cropzone && this._cropzone.visible) {
 	                return;
 	            }
 	            var canvas = this.getCanvas();
-
+	            if (this._cropzone && !this._cropzone.visible) {
+	                canvas.remove(this._cropzone);
+	                this._cropzone.visible = true;
+	            }
 	            canvas.forEachObject(function (obj) {
 	                // {@link http://fabricjs.com/docs/fabric.Object.html#evented}
 	                obj.evented = false;
 	            });
-
 	            this._cropzone = new _cropzone2.default(canvas, {
 	                left: 0,
 	                top: 0,
@@ -12907,7 +12909,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                obj.evented = true;
 	            });
 
-	            this._cropzone = null;
+	            this._cropzone.visible = false;
+	            canvas.add(this._cropzone);
+
+	            // this._cropzone = null;
 
 	            _fabric2.default.util.removeListener(document, 'keydown', this._listeners.keydown);
 	            _fabric2.default.util.removeListener(document, 'keyup', this._listeners.keyup);

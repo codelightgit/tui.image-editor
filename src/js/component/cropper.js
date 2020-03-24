@@ -74,15 +74,17 @@ class Cropper extends Component {
      * Start cropping
      */
     start() {
-        if (this._cropzone) {
+        if (this._cropzone && this._cropzone.visible) {
             return;
         }
         const canvas = this.getCanvas();
-
+        if (this._cropzone && !this._cropzone.visible) {
+            canvas.remove(this._cropzone);
+            this._cropzone.visible = true;
+        }
         canvas.forEachObject(obj => { // {@link http://fabricjs.com/docs/fabric.Object.html#evented}
             obj.evented = false;
         });
-
         this._cropzone = new Cropzone(canvas, {
             left: 0,
             top: 0,
@@ -126,7 +128,10 @@ class Cropper extends Component {
             obj.evented = true;
         });
 
-        this._cropzone = null;
+        this._cropzone.visible = false;
+        canvas.add(this._cropzone);
+
+        // this._cropzone = null;
 
         fabric.util.removeListener(document, 'keydown', this._listeners.keydown);
         fabric.util.removeListener(document, 'keyup', this._listeners.keyup);
