@@ -490,6 +490,7 @@ class ImageEditor {
      * //    CROPPER: 'CROPPER'
      * //    FREE_DRAWING: 'FREE_DRAWING'
      * //    LINE_DRAWING: 'LINE_DRAWING'
+     * //    POLYGON DRAWING: 'POLYGON_DRAWING'
      * //    TEXT: 'TEXT'
      * //
      * if (imageEditor.getDrawingMode() === 'FREE_DRAWING') {
@@ -655,7 +656,7 @@ class ImageEditor {
 
     /**
      * Start a drawing mode. If the current mode is not 'NORMAL', 'stopDrawingMode()' will be called first.
-     * @param {String} mode Can be one of <I>'CROPPER', 'FREE_DRAWING', 'LINE_DRAWING', 'TEXT', 'SHAPE'</I>
+     * @param {String} mode Can be one of <I>'CROPPER', 'FREE_DRAWING', 'LINE_DRAWING', 'POLYGON_DRAWING', 'TEXT', 'SHAPE'</I>
      * @param {Object} [option] parameters of drawing mode, it's available with 'FREE_DRAWING', 'LINE_DRAWING'
      *  @param {Number} [option.width] brush width
      *  @param {String} [option.color] brush color

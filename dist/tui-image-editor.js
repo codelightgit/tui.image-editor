@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.19
+ * @version 3.7.20
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -1159,6 +1159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * //    CROPPER: 'CROPPER'
 	         * //    FREE_DRAWING: 'FREE_DRAWING'
 	         * //    LINE_DRAWING: 'LINE_DRAWING'
+	         * //    POLYGON DRAWING: 'POLYGON_DRAWING'
 	         * //    TEXT: 'TEXT'
 	         * //
 	         * if (imageEditor.getDrawingMode() === 'FREE_DRAWING') {
@@ -1372,7 +1373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * Start a drawing mode. If the current mode is not 'NORMAL', 'stopDrawingMode()' will be called first.
-	         * @param {String} mode Can be one of <I>'CROPPER', 'FREE_DRAWING', 'LINE_DRAWING', 'TEXT', 'SHAPE'</I>
+	         * @param {String} mode Can be one of <I>'CROPPER', 'FREE_DRAWING', 'LINE_DRAWING', 'POLYGON_DRAWING', 'TEXT', 'SHAPE'</I>
 	         * @param {Object} [option] parameters of drawing mode, it's available with 'FREE_DRAWING', 'LINE_DRAWING'
 	         *  @param {Number} [option.width] brush width
 	         *  @param {String} [option.color] brush color
@@ -8602,6 +8603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.actions.changeSelectableAll(true);
 	            this._els.lineSelectButton.classList.remove('free');
 	            this._els.lineSelectButton.classList.remove('line');
+	            this._els.lineSelectButton.classList.remove('polygon');
 	        }
 
 	        /**
@@ -9440,7 +9442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    _this3.startDrawingMode('FREE_DRAWING', settings);
 	                } else if (type === 'line') {
 	                    _this3.startDrawingMode('LINE_DRAWING', settings);
-	                } else {
+	                } else if (type === 'polygon') {
 	                    _this3.startDrawingMode('POLYGON_DRAWING', settings);
 	                }
 	            },
@@ -11777,6 +11779,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (drawingMode === drawingModes.LINE) {
 	                compName = drawingModes.LINE;
+	            }
+	            if (drawingMode === drawingModes.POLYGON) {
+	                compName = drawingModes.POLYGON;
 	            }
 
 	            this.getComponent(compName).setBrush(option);

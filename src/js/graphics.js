@@ -608,6 +608,9 @@ class Graphics {
         if (drawingMode === drawingModes.LINE) {
             compName = drawingModes.LINE;
         }
+        if (drawingMode === drawingModes.POLYGON) {
+            compName = drawingModes.POLYGON;
+        }
 
         this.getComponent(compName).setBrush(option);
     }

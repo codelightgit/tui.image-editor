@@ -225,7 +225,7 @@ export default {
                     this.startDrawingMode('FREE_DRAWING', settings);
                 } else if (type === 'line') {
                     this.startDrawingMode('LINE_DRAWING', settings);
-                } else {
+                } else if (type === 'polygon') {
                     this.startDrawingMode('POLYGON_DRAWING', settings);
                 }
             },

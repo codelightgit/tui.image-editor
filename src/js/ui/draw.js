@@ -70,6 +70,7 @@ class Draw extends Submenu {
         this.actions.changeSelectableAll(true);
         this._els.lineSelectButton.classList.remove('free');
         this._els.lineSelectButton.classList.remove('line');
+        this._els.lineSelectButton.classList.remove('polygon');
     }
 
     /**
