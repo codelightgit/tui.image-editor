@@ -119,6 +119,9 @@ export default {
                     w = window.open();
                     w.document.body.innerHTML = `<img src='${dataURL}'>`;
                 }
+            },
+            deleteImage: () => {
+                this.removeAll();
             }
         }, this._commonAction());
     },

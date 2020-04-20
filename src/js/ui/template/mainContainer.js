@@ -1,4 +1,5 @@
-export default ({locale, commonStyle, headerStyle, loadButtonStyle, downloadButtonStyle, submenuStyle}) => (`
+export default ({locale, commonStyle, headerStyle, loadButtonStyle, downloadButtonStyle,
+    submenuStyle, deleteButtonStyle}) => (`
     <div class="tui-image-editor-main-container" style="${commonStyle}">
         <div class="tui-image-editor-header" style="${headerStyle}">
             <div class="tui-image-editor-header-buttons">
@@ -8,6 +9,9 @@ export default ({locale, commonStyle, headerStyle, loadButtonStyle, downloadButt
                 </div>
                 <button class="tui-image-editor-download-btn" style="${downloadButtonStyle}">
                     ${locale.localize('Download')}
+                </button>
+                <button class="tui-image-editor-delete-btn" style="${deleteButtonStyle}">
+                    ${locale.localize('Delete')}
                 </button>
             </div>
         </div>

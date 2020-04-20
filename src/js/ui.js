@@ -72,6 +72,7 @@ class Ui {
             'delete': this._menuElement.querySelector('#tie-btn-delete'),
             'deleteAll': this._menuElement.querySelector('#tie-btn-delete-all'),
             'download': this._selectedElement.querySelectorAll('.tui-image-editor-download-btn'),
+            'deleteImage': this._selectedElement.querySelectorAll('.tui-image-editor-delete-btn'),
             'load': this._selectedElement.querySelectorAll('.tui-image-editor-load-btn')
         };
 
@@ -306,7 +307,8 @@ class Ui {
             biImage: this.theme.getStyle('common.bi'),
             iconStyle: this.theme.getStyle('menu.icon'),
             loadButtonStyle: this.theme.getStyle('loadButton'),
-            downloadButtonStyle: this.theme.getStyle('downloadButton')
+            downloadButtonStyle: this.theme.getStyle('downloadButton'),
+            deleteButtonStyle: this.theme.getStyle('deleteButton')
         }) +
         mainContainer({
             locale: this._locale,
@@ -315,7 +317,8 @@ class Ui {
             headerStyle: this.theme.getStyle('header'),
             loadButtonStyle: this.theme.getStyle('loadButton'),
             downloadButtonStyle: this.theme.getStyle('downloadButton'),
-            submenuStyle: this.theme.getStyle('submenu')
+            submenuStyle: this.theme.getStyle('submenu'),
+            deleteButtonStyle: this.theme.getStyle('deleteButton')
         });
 
         this._selectedElement = selectedElement;
@@ -388,6 +391,18 @@ class Ui {
     }
 
     /**
+     * Add delete image event
+     * @private
+     */
+    _addDeleteImageEvent() {
+        snippet.forEach(this._els.deleteImage, element => {
+            element.addEventListener('click', () => {
+                this._actions.main.deleteImage();
+            });
+        });
+    }
+
+    /**
      * Add menu event
      * @param {string} menuName - menu name
      * @private
@@ -431,6 +446,7 @@ class Ui {
         this._addHelpActionEvent('deleteAll');
 
         this._addDownloadEvent();
+        this._addDeleteImageEvent();
 
         snippet.forEach(this.options.menu, menuName => {
             this._addMenuEvent(menuName);

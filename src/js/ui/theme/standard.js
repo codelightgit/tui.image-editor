@@ -25,6 +25,11 @@
  * @property {string} downloadButton.color - download button foreground color
  * @property {string} downloadButton.fontFamily - download button font type
  * @property {string} downloadButton.fontSize - download button font size
+ * @property {string} deleteButton.backgroundColor - download button background color
+ * @property {string} deleteButton.border - download button border style
+ * @property {string} deleteButton.color - download button foreground color
+ * @property {string} deleteButton.fontFamily - download button font type
+ * @property {string} deleteButton.fontSize - download button font size
  * @property {string} menu.normalIcon.path - Menu default icon svg bundle file path
  * @property {string} menu.normalIcon.name - Menu default icon svg bundle name
  * @property {string} menu.activeIcon.path - Menu active icon svg bundle file path
@@ -85,6 +90,13 @@
     'downloadButton.color': '#fff',
     'downloadButton.fontFamily': 'NotoSans, sans-serif',
     'downloadButton.fontSize': '12px',
+
+    // delete button
+    'deleteButton.backgroundColor': '#fff',
+    'deleteButton.border': '1px solid #ddd',
+    'deleteButton.color': '#222',
+    'deleteButton.fontFamily': 'NotoSans, sans-serif',
+    'deleteButton.fontSize': '12px',
 
     // main icons
     'menu.normalIcon.path': '../dist/svg/icon-b.svg',
@@ -159,6 +171,13 @@ export default {
     'downloadButton.color': '#fff',
     'downloadButton.fontFamily': '\'Noto Sans\', sans-serif',
     'downloadButton.fontSize': '12px',
+
+    // delete button
+    'deleteButton.backgroundColor': '#9f2f37',
+    'deleteButton.border': '1px solid #9f2f37',
+    'deleteButton.color': '#fff',
+    'deleteButton.fontFamily': '\'Noto Sans\', sans-serif',
+    'deleteButton.fontSize': '12px',
 
     // main icons
     'menu.normalIcon.path': 'icon-d.svg',

@@ -1500,6 +1500,13 @@ class ImageEditor {
     }
 
     /**
+     * Remove All Contents from Canvas
+     */
+    removeAll() {
+        this._graphics.removeAll(true);
+    }
+
+    /**
      * Set position
      * @param {Object} options - Position options (left or top)
      * @private

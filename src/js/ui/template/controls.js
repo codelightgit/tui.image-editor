@@ -1,4 +1,5 @@
-export default ({locale, biImage, iconStyle: {normal, hover, disabled}, loadButtonStyle, downloadButtonStyle}) => (`
+export default ({locale, biImage, iconStyle: {normal, hover, disabled}, loadButtonStyle,
+    downloadButtonStyle, deleteButtonStyle}) => (`
     <div class="tui-image-editor-controls">
         <div class="tui-image-editor-controls-logo">
             <img src="${biImage}" />
@@ -55,6 +56,10 @@ export default ({locale, biImage, iconStyle: {normal, hover, disabled}, loadButt
             <button class="tui-image-editor-download-btn" style="${downloadButtonStyle}">
                 ${locale.localize('Download')}
             </button>
+            <button class="tui-image-editor-delete-btn" style="${deleteButtonStyle}">
+                ${locale.localize('Delete')}
+            </button>
+        </div>
         </div>
     </div>
 `);
