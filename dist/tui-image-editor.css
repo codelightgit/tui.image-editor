@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.20
+ * @version 3.7.21
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -81,6 +81,11 @@ body > textarea {
 .tui-image-editor-container .tui-image-editor-download-btn {
   background-color: #fdba3b;
   border-color: #fdba3b;
+  color: #fff;
+}
+.tui-image-editor-container .tui-image-editor-delete-btn {
+  background-color: #9f2f37;
+  border-color: #9f2f37;
   color: #fff;
 }
 .tui-image-editor-container .tui-image-editor-load-btn {
