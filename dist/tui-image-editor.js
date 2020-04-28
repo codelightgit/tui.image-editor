@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.21
+ * @version 3.7.22
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2164,10 +2164,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this._graphics._canvas.loadFromJSON(JSON.stringify(restoreObj), function () {
 	                if (crop) {
-	                    self.crop(crop).then(function () {
-	                        self.stopDrawingMode();
-	                        self.ui.resizeEditor();
-	                    });
+	                    // self.crop(crop).then(() => {
+	                    self.stopDrawingMode();
+	                    self.ui.resizeEditor();
+	                    // });
 	                }
 	            });
 	        }

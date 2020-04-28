@@ -1340,10 +1340,10 @@ class ImageEditor {
 
         this._graphics._canvas.loadFromJSON(JSON.stringify(restoreObj), () => {
             if (crop) {
-                self.crop(crop).then(() => {
-                    self.stopDrawingMode();
-                    self.ui.resizeEditor();
-                });
+                // self.crop(crop).then(() => {
+                self.stopDrawingMode();
+                self.ui.resizeEditor();
+                // });
             }
         });
     }
