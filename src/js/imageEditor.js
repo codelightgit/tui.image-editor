@@ -1504,6 +1504,7 @@ class ImageEditor {
      */
     removeAll() {
         this._graphics.removeAll(true);
+        this.fire(events.IMAGE_CHANGED, 'delete');
     }
 
     /**

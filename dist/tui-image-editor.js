@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.22
+ * @version 3.7.23
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2369,6 +2369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'removeAll',
 	        value: function removeAll() {
 	            this._graphics.removeAll(true);
+	            this.fire(events.IMAGE_CHANGED, 'delete');
 	        }
 
 	        /**
