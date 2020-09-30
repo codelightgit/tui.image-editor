@@ -1093,6 +1093,7 @@ export default class ImageTracer {
         if (options && options.corsenabled) {
             img.crossOrigin = 'use-credentials';
         }
+        
         img.src = url;
         img.onload = function() {
             const canvas = document.createElement('canvas');

@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.23
+ * @version 3.7.24
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -10943,6 +10943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (options && options.corsenabled) {
 	                img.crossOrigin = 'use-credentials';
 	            }
+
 	            img.src = url;
 	            img.onload = function () {
 	                var canvas = document.createElement('canvas');
