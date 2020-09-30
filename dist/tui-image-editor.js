@@ -1,6 +1,6 @@
 /*!
  * tui-image-editor.js
- * @version 3.7.24
+ * @version 3.7.25
  * @author NHN FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -2154,7 +2154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            }
 	            forEach(restoreObj.objects, function (value, key) {
-	                if (value.type === 'cropzone') {
+	                if (value && value.type === 'cropzone') {
 	                    restoreObj.objects.splice(key, 1);
 	                    crop = value;
 	                }

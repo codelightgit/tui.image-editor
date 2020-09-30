@@ -1330,7 +1330,7 @@ class ImageEditor {
                 });
         }
         forEach(restoreObj.objects, (value, key) => {
-            if (value.type === 'cropzone') {
+            if (value && value.type === 'cropzone') {
                 restoreObj.objects.splice(key, 1);
                 crop = value;
             }
